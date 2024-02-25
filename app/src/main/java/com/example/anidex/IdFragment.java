@@ -16,6 +16,8 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -118,7 +120,7 @@ public class IdFragment extends Fragment {
 
             JSONObject textContent = new JSONObject();
             textContent.put("type", "text");
-            textContent.put("text", "What’s in this image?");
+            textContent.put("text", "which anime character is this?");
             content.put(textContent);
 
             JSONObject imageContent = new JSONObject();
@@ -143,14 +145,12 @@ public class IdFragment extends Fragment {
         call.enqueue(new retrofit2.Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                if (response.isSuccessful()) {
-                    Log.d("APIResponse", "Raw response: " + response.body().toString());
-
+                if (response.isSuccessful() && response.body() != null) {
                     ApiResponse apiResponse = response.body();
-                    if (apiResponse != null && apiResponse.getChoices() != null && !apiResponse.getChoices().isEmpty()) {
-                        String responseText = apiResponse.getChoices().get(0).getText(); // Extracting text from the first choice
+                    if (!apiResponse.getChoices().isEmpty()) {
+                        String responseText = apiResponse.getChoices().get(0).getMessage().getContent();
                         getActivity().runOnUiThread(() ->
-                                Toast.makeText(getContext(), "Upload successful: " + responseText, Toast.LENGTH_LONG).show());
+                                Toast.makeText(getContext(), "Response: " + responseText, Toast.LENGTH_LONG).show());
                     } else {
                         getActivity().runOnUiThread(() ->
                                 Toast.makeText(getContext(), "Upload successful but no response content.", Toast.LENGTH_LONG).show());

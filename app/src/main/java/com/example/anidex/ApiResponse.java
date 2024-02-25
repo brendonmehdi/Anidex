@@ -5,31 +5,8 @@ import java.util.List;
 public class ApiResponse {
     private List<Choice> choices;
 
-    private boolean success;
-    private String message;
+    // Add other fields as necessary, e.g., id, model, usage
 
-
-    @Override
-    public String toString() {
-        StringBuilder choicesStr = new StringBuilder("[");
-        if (choices != null) {
-            for (Choice choice : choices) {
-                choicesStr.append("{text: ").append(choice.getText()).append("}, ");
-            }
-            // Remove the last comma and space if not empty
-            if (!choices.isEmpty()) {
-                choicesStr = new StringBuilder(choicesStr.substring(0, choicesStr.length() - 2));
-            }
-        }
-        choicesStr.append("]");
-        return "ApiResponse{" +
-                "success=" + success +
-                ", message='" + message + '\'' +
-                ", choices=" + choicesStr +
-                '}';
-    }
-
-    // Constructor, getters, and setters
     public List<Choice> getChoices() {
         return choices;
     }
@@ -38,17 +15,38 @@ public class ApiResponse {
         this.choices = choices;
     }
 
+    // Choice class to match the structure within "choices"
     public static class Choice {
-        private String text; // Assuming 'text' holds the response content
+        private Message message;
 
-        public String getText() {
-            return text;
+        public Message getMessage() {
+            return message;
         }
 
-        public void setText(String text) {
-            this.text = text;
+        public void setMessage(Message message) {
+            this.message = message;
         }
     }
 
+    // Message class to capture the "message" object within each choice
+    public static class Message {
+        private String role;
+        private String content;
 
+        public String getRole() {
+            return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+    }
 }
