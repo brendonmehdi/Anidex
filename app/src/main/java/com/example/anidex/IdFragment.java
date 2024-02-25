@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -38,6 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class IdFragment extends Fragment {
 
     private ImageView imageView;
+    TextView imgText;
     private ActivityResultLauncher<String> getContent;
     private OpenAIApiService apiService;
     @Override
@@ -88,6 +90,9 @@ public class IdFragment extends Fragment {
                 getContent.launch("image/*");
             }
         });
+
+        imgText = view.findViewById(R.id.imageText);
+
         return view;
     }
 
@@ -151,6 +156,9 @@ public class IdFragment extends Fragment {
                         String responseText = apiResponse.getChoices().get(0).getMessage().getContent();
                         getActivity().runOnUiThread(() ->
                                 Toast.makeText(getContext(), "Response: " + responseText, Toast.LENGTH_LONG).show());
+                        imgText.setText(responseText);
+
+
                     } else {
                         getActivity().runOnUiThread(() ->
                                 Toast.makeText(getContext(), "Upload successful but no response content.", Toast.LENGTH_LONG).show());
