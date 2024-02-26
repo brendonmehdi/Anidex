@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.anidex">
 
+<!--    had to add below permission to use the internet-->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application

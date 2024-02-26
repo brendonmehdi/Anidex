@@ -2,11 +2,13 @@ package com.example.anidex;
 
 import java.util.List;
 
+/**
+ * Represents the response structure from the OpenAI API.
+ */
 public class ApiResponse {
-    private List<Choice> choices;
+    private List<Choice> choices; // A list of choices containing the analysis results.
 
-    // Add other fields as necessary, e.g., id, model, usage
-
+    // Getters and setters for the choices.
     public List<Choice> getChoices() {
         return choices;
     }
@@ -15,10 +17,13 @@ public class ApiResponse {
         this.choices = choices;
     }
 
-    // Choice class to match the structure within "choices"
+    /**
+     * Represents a single choice in the API response.
+     */
     public static class Choice {
-        private Message message;
+        private Message message; // The message containing the analysis content.
 
+        // Getter and setter for the message.
         public Message getMessage() {
             return message;
         }
@@ -28,11 +33,14 @@ public class ApiResponse {
         }
     }
 
-    // Message class to capture the "message" object within each choice
+    /**
+     * Represents the message part of a choice, containing the actual content.
+     */
     public static class Message {
-        private String role;
-        private String content;
+        private String role; // The role of the message (e.g., "assistant").
+        private String content; // The actual content of the message (analysis result).
 
+        // Getters and setters for role and content.
         public String getRole() {
             return role;
         }
