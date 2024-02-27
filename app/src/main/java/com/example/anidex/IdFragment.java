@@ -207,7 +207,7 @@ public class IdFragment extends Fragment {
                         // Extracts and displays the response text.
                         String responseText = apiResponse.getChoices().get(0).getMessage().getContent();
                         getActivity().runOnUiThread(() -> {
-                            Toast.makeText(getContext(), "Response: " + responseText, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
                             imgText.setText(responseText); // Updates the TextView with analysis result.
                         });
                     } else {
