@@ -163,30 +163,48 @@ public class IdFragment extends Fragment {
      * @param base64Image The Base64-encoded image string.
      */
     private void uploadImage(String base64Image) {
-        // Constructs the JSON payload for the API request.
+        // constructs the JSON payload for the API request
         JSONObject payload = new JSONObject();
         try {
+            //sets the model
             payload.put("model", "gpt-4-vision-preview");
+            //created messages jsonarray
             JSONArray messages = new JSONArray();
+            //created message json object
             JSONObject message = new JSONObject();
+            //sets the role
             message.put("role", "user");
+            //created jsonArray for content
             JSONArray content = new JSONArray();
 
+            //json object fot the text aka the prompt
             JSONObject textContent = new JSONObject();
+
+            //add the content type and prompt to the above object
             textContent.put("type", "text");
             textContent.put("text", "which anime character is this?");
+            //puts the text content in our array of content json array
             content.put(textContent);
 
+            //created json object for the base 64 image
             JSONObject imageContent = new JSONObject();
+            //puting in the image url
             imageContent.put("type", "image_url");
+            //created image url object
             JSONObject imageUrl = new JSONObject();
+            //puting my bas65Image
             imageUrl.put("url", "data:image/jpeg;base64," + base64Image);
+            //puuting in the image url
             imageContent.put("image_url", imageUrl);
+            //put the image content inside of our content array
             content.put(imageContent);
 
+            //puts out one message into the messages array
             message.put("content", content);
             messages.put(message);
+            //puts our messages into the payload
             payload.put("messages", messages);
+            //sets max tokens
             payload.put("max_tokens", 300);
         } catch (JSONException e) {
             e.printStackTrace();

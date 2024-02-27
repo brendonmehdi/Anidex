@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <color name="primary">#FFFEFEFE</color> <!-- Off-White -->
+    <color name="secondary">#FFFCFCFC</color> <!-- Light Gray -->
+    <color name="accent">#FFFE3F53</color> <!-- Red -->
+    <color name="text_light">#FF000000</color> <!-- Black -->
+    <color name="text_dark">#FFFFFFFF</color> <!-- White -->
 </resources>
