@@ -3,10 +3,19 @@ package com.example.anidex;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +68,41 @@ public class MusicFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_music, container, false);
+        View view = inflater.inflate(R.layout.fragment_music, container, false);
+        RecyclerView rvAnimeThemes = view.findViewById(R.id.rvAnimeThemes);
+        rvAnimeThemes.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Initialize Retrofit JikanApiService
+        JikanApiService service = RetrofitClient.getService();
+
+        // Assume animeId is obtained somehow (for example, as an argument)
+        int animeId = 20; // Placeholder anime ID
+
+        // Make the API call to get anime themes
+        service.getAnimeThemes(animeId).enqueue(new Callback<AnimeThemesResponse>() {
+            @Override
+            public void onResponse(Call<AnimeThemesResponse> call, Response<AnimeThemesResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ThemesData themes = response.body().getData();
+                    List<String> allThemes = new ArrayList<>();
+                    allThemes.addAll(themes.getOpenings());
+                    allThemes.addAll(themes.getEndings());
+
+                //updates the thread
+                    getActivity().runOnUiThread(() -> {
+                        AnimeThemesAdapter adapter = new AnimeThemesAdapter(allThemes);
+                        rvAnimeThemes.setAdapter(adapter);
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AnimeThemesResponse> call, Throwable t) {
+
+            }
+        });
+
+        return view;
     }
+
 }

@@ -57,7 +57,7 @@ public class IdFragment extends Fragment {
             if (uri != null) {
                 imageView.setImageURI(uri); // Displays the selected image.
                 String imageBase64 = convertImageToBase64(uri); // Converts image to Base64.
-                uploadImage(imageBase64); // Uploads image for analysis.
+                uploadImage(imageBase64); // Uploads image for analysis. and gives back and sets our response
             }
         });
 
@@ -182,7 +182,7 @@ public class IdFragment extends Fragment {
 
             //add the content type and prompt to the above object
             textContent.put("type", "text");
-            textContent.put("text", "which anime character is this?");
+            textContent.put("text", "which anime character is this? give the feed back as an overly excited anime fan, only give back 2-4 sentences");
             //puts the text content in our array of content json array
             content.put(textContent);
 
