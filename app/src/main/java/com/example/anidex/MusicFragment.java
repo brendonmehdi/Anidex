@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,18 +68,47 @@ public class MusicFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_music, container, false);
+        SearchView searchView = view.findViewById(R.id.searchView);
         RecyclerView rvAnimeThemes = view.findViewById(R.id.rvAnimeThemes);
         rvAnimeThemes.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Initialize Retrofit JikanApiService
         JikanApiService service = RetrofitClient.getService();
 
-        // Assume animeId is obtained somehow (for example, as an argument)
-        int animeId = 20; // Placeholder anime ID
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Use the search endpoint to find an anime by title
+                service.searchAnime(query).enqueue(new Callback<AnimeSearchResponse>() {
+                    @Override
+                    public void onResponse(Call<AnimeSearchResponse> call, Response<AnimeSearchResponse> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            // Assuming your AnimeSearchResponse includes a list of anime
+                            // For simplicity, take the first result's ID to get themes
+                            int animeId = response.body().getData().get(0).getMalId();
+                            fetchAnimeThemes(animeId, service, rvAnimeThemes);
+                        }
+                    }
 
-        // Make the API call to get anime themes
+                    @Override
+                    public void onFailure(Call<AnimeSearchResponse> call, Throwable t) {
+                        // Handle failure
+                    }
+                });
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Feel free to implement if needed
+                return false;
+            }
+        });
+
+        return view;
+    }
+
+    private void fetchAnimeThemes(int animeId, JikanApiService service, RecyclerView recyclerView) {
         service.getAnimeThemes(animeId).enqueue(new Callback<AnimeThemesResponse>() {
             @Override
             public void onResponse(Call<AnimeThemesResponse> call, Response<AnimeThemesResponse> response) {
@@ -88,21 +118,19 @@ public class MusicFragment extends Fragment {
                     allThemes.addAll(themes.getOpenings());
                     allThemes.addAll(themes.getEndings());
 
-                //updates the thread
+                    // Update RecyclerView on the main thread
                     getActivity().runOnUiThread(() -> {
                         AnimeThemesAdapter adapter = new AnimeThemesAdapter(allThemes);
-                        rvAnimeThemes.setAdapter(adapter);
+                        recyclerView.setAdapter(adapter);
                     });
                 }
             }
 
             @Override
             public void onFailure(Call<AnimeThemesResponse> call, Throwable t) {
-
+                // Handle failure
             }
         });
-
-        return view;
     }
-
 }
+
