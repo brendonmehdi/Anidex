@@ -26,7 +26,7 @@ import retrofit2.Response;
 public class MusicFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -35,7 +35,7 @@ public class MusicFragment extends Fragment {
     private String mParam2;
 
     public MusicFragment() {
-        // Required empty public constructor
+
     }
 
     /**
@@ -83,8 +83,7 @@ public class MusicFragment extends Fragment {
                     @Override
                     public void onResponse(Call<AnimeSearchResponse> call, Response<AnimeSearchResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            // Assuming your AnimeSearchResponse includes a list of anime
-                            // For simplicity, take the first result's ID to get themes
+
                             int animeId = response.body().getData().get(0).getMalId();
                             fetchAnimeThemes(animeId, service, rvAnimeThemes);
                         }
@@ -114,13 +113,17 @@ public class MusicFragment extends Fragment {
             public void onResponse(Call<AnimeThemesResponse> call, Response<AnimeThemesResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ThemesData themes = response.body().getData();
-                    List<String> allThemes = new ArrayList<>();
-                    allThemes.addAll(themes.getOpenings());
-                    allThemes.addAll(themes.getEndings());
+                    List<AnimeTheme> allThemes = new ArrayList<>();
 
-                    // Update RecyclerView on the main thread
+                    for (String title : themes.getOpenings()) {
+                        allThemes.add(new AnimeTheme(title));
+                    }
+                    for (String title : themes.getEndings()) {
+                        allThemes.add(new AnimeTheme(title));
+                    }
+
                     getActivity().runOnUiThread(() -> {
-                        AnimeThemesAdapter adapter = new AnimeThemesAdapter(allThemes);
+                        AnimeThemesAdapter adapter = new AnimeThemesAdapter(getContext(), allThemes);
                         recyclerView.setAdapter(adapter);
                     });
                 }
@@ -132,5 +135,9 @@ public class MusicFragment extends Fragment {
             }
         });
     }
+
+
+
+
 }
 

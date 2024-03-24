@@ -1,45 +1,48 @@
 package com.example.anidex;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
 public class AnimeThemesAdapter extends RecyclerView.Adapter<AnimeThemesAdapter.ViewHolder> {
-    private List<String> themes;
 
-    public AnimeThemesAdapter(List<String> themes) {
+    private Context context;
+    private List<AnimeTheme> themes;
+
+    public AnimeThemesAdapter(Context context, List<AnimeTheme> themes) {
+        this.context = context;
         this.themes = themes;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(android.R.layout.simple_list_item_1, parent, false);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_anime_theme, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.themeTextView.setText(themes.get(position));
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        AnimeTheme theme = themes.get(position);
+        holder.tvSongTitle.setText(theme.getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return themes != null ? themes.size() : 0;
+        return themes.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView themeTextView;
+        TextView tvSongTitle;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            themeTextView = itemView.findViewById(android.R.id.text1);
+            tvSongTitle = itemView.findViewById(R.id.tvSongTitle);
         }
     }
 }
-

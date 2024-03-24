@@ -3,7 +3,7 @@ package com.example.anidex;
 public class AnimeSearchItem {
     private int mal_id;
     private String title;
-    // Include other fields as necessary
+
 
     public int getMalId() {
         return mal_id;

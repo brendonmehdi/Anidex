@@ -12,4 +12,7 @@ public interface JikanApiService {
     @GET("anime")
     Call<AnimeSearchResponse> searchAnime(@Query("q") String query);
 
+
+
+
 }
