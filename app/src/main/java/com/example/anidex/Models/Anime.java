@@ -33,6 +33,31 @@ public class Anime implements Parcelable {
 
     }
 
+    public Anime(String id, String type, String synopsis, String canonicalTitle, String posterImage, List<String> genres, String startDate, String endDate, String status, int episodeCount, int episodeLength, double averageRating, String ageRating, String ageRatingGuide, String youtubeVideoId, String animeType, String youtubeVideoUrl, String coverImage, String trailerVideoUrl, int totalLength, List<String> categories, List<String> producers) {
+        this.id = id;
+        this.type = type;
+        this.synopsis = synopsis;
+        this.canonicalTitle = canonicalTitle;
+        this.posterImage = posterImage;
+        this.genres = genres;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.episodeCount = episodeCount;
+        this.episodeLength = episodeLength;
+        this.averageRating = averageRating;
+        this.ageRating = ageRating;
+        this.ageRatingGuide = ageRatingGuide;
+        this.youtubeVideoId = youtubeVideoId;
+        this.animeType = animeType;
+        this.youtubeVideoUrl = youtubeVideoUrl;
+        this.coverImage = coverImage;
+        this.trailerVideoUrl = trailerVideoUrl;
+        this.totalLength = totalLength;
+        this.categories = categories;
+        this.producers = producers;
+    }
+
     public String getId() {
         return id;
     }
@@ -299,7 +324,4 @@ public class Anime implements Parcelable {
         dest.writeStringList(producers);
     }
 
-    // Getters and Setters
-    // You would need to generate getters and setters for all fields
-    // For brevity, they are not included here
 }

@@ -38,6 +38,36 @@ public class Manga implements Parcelable {
 
     }
 
+    public Manga(String id, String type, String synopsis, String canonicalTitle, String posterImage, List<String> genres, String startDate, String endDate, String status, int chapterCount, double averageRating, String ageRating, String ageRatingGuide, String youtubeVideoId, String mangaType, String youtubeVideoUrl, String coverImage, String trailerVideoUrl, String volumeCount, String volumeTitle, List<String> authors, List<String> artists, String serialization, List<String> characters, List<String> staff, String franchise, List<String> publishers) {
+        this.id = id;
+        this.type = type;
+        this.synopsis = synopsis;
+        this.canonicalTitle = canonicalTitle;
+        this.posterImage = posterImage;
+        this.genres = genres;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.chapterCount = chapterCount;
+        this.averageRating = averageRating;
+        this.ageRating = ageRating;
+        this.ageRatingGuide = ageRatingGuide;
+        this.youtubeVideoId = youtubeVideoId;
+        this.mangaType = mangaType;
+        this.youtubeVideoUrl = youtubeVideoUrl;
+        this.coverImage = coverImage;
+        this.trailerVideoUrl = trailerVideoUrl;
+        this.volumeCount = volumeCount;
+        this.volumeTitle = volumeTitle;
+        this.authors = authors;
+        this.artists = artists;
+        this.serialization = serialization;
+        this.characters = characters;
+        this.staff = staff;
+        this.franchise = franchise;
+        this.publishers = publishers;
+    }
+
     protected Manga(Parcel in) {
         id = in.readString();
         type = in.readString();

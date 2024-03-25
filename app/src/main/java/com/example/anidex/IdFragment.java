@@ -17,8 +17,6 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
-import com.google.gson.Gson;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,9 +75,9 @@ public class IdFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_id, container, false);
-        imageView = view.findViewById(R.id.imageView);
+        imageView = view.findViewById(R.id.imageAnime);
         // Find the ImageView by its ID
-        imageView = view.findViewById(R.id.imageView);
+        imageView = view.findViewById(R.id.imageAnime);
 
         // Find the Button by its ID and set an OnClickListener
         Button buttonUpload = view.findViewById(R.id.buttonUpload);
