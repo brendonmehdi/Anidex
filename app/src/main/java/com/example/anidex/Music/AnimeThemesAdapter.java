@@ -1,4 +1,4 @@
-package com.example.anidex;
+package com.example.anidex.Music;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.anidex.R;
+
 import java.util.List;
 
 public class AnimeThemesAdapter extends RecyclerView.Adapter<AnimeThemesAdapter.ViewHolder> {

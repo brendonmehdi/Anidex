@@ -17,7 +17,8 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
-import com.google.gson.Gson;
+import com.example.anidex.OpenAI.ApiResponse;
+import com.example.anidex.OpenAI.OpenAIApiService;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -11,6 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import com.example.anidex.Music.AnimeSearchResponse;
+import com.example.anidex.Music.AnimeTheme;
+import com.example.anidex.Music.AnimeThemesAdapter;
+import com.example.anidex.Music.AnimeThemesResponse;
+import com.example.anidex.Music.JikanApiService;
+import com.example.anidex.Music.RetrofitClient;
+import com.example.anidex.Music.ThemesData;
+
 import java.util.ArrayList;
 import java.util.List;
 

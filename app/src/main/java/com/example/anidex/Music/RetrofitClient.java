@@ -1,4 +1,6 @@
-package com.example.anidex;
+package com.example.anidex.Music;
+
+import com.example.anidex.Music.JikanApiService;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

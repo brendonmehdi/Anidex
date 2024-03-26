@@ -1,4 +1,4 @@
-package com.example.anidex;
+package com.example.anidex.Music;
 
 public class AnimeSearchItem {
     private int mal_id;

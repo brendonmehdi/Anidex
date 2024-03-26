@@ -1,6 +1,4 @@
-package com.example.anidex;
-
-import java.util.List;
+package com.example.anidex.Music;
 
 public class AnimeThemesResponse {
     private ThemesData data;

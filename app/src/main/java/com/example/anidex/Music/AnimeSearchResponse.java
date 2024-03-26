@@ -1,4 +1,6 @@
-package com.example.anidex;
+package com.example.anidex.Music;
+
+import com.example.anidex.Music.AnimeSearchItem;
 
 import java.util.List;
 

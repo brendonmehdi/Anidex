@@ -1,4 +1,7 @@
-package com.example.anidex;
+package com.example.anidex.Music;
+
+import com.example.anidex.Music.AnimeSearchResponse;
+import com.example.anidex.Music.AnimeThemesResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

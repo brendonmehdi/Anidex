@@ -1,4 +1,6 @@
-package com.example.anidex;
+package com.example.anidex.OpenAI;
+
+import com.example.anidex.OpenAI.ApiResponse;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
