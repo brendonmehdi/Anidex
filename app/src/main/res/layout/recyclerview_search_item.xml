@@ -26,7 +26,8 @@
         android:alpha="0.7"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:textColor="@android:color/white"
+        android:text="Anime Name"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,12 +35,13 @@
 
     <TextView
         android:id="@+id/textType"
-        android:layout_width="100px"
-        android:layout_height="100px"
+        android:layout_width="73dp"
+        android:layout_height="38dp"
         android:alpha="0.7"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:textColor="@android:color/white"
+        android:text="Type"
+        android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

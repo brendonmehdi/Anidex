@@ -10,16 +10,16 @@ import java.util.List;
 
 public interface KitsuService {
     // Endpoint for searching anime by name
-    @GET("anime")
+    @GET("anime?")
     Call<List<Anime>> searchAnime(
-            @Query("filter%5Btext%5D") String query,
-            @Query("page%5Blimit%5D") int limit
+            @Query("filter[text]") String query,
+            @Query("page[limit]") int limit
     );
 
     // Endpoint for searching manga by name
-    @GET("manga")
+    @GET("manga?")
     Call<List<Manga>> searchManga(
-            @Query("filter%5Btext%5D") String query,
-            @Query("page%5Blimit%5D") int limit
+            @Query("filter[text]") String query,
+            @Query("page[limit]") int limit
     );
 }
