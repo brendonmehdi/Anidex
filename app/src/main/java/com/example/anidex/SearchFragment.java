@@ -45,9 +45,11 @@ public class SearchFragment extends Fragment {
         adapter = new AnimeMangaAdapter(getContext(), searchResults);
         recyclerView.setAdapter(adapter);
 
+        String baseUrl="https://kitsu.io/api/edge/";
+
         // Initialize Retrofit
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://kitsu.io/api/edge/")
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -76,7 +78,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchAnime(String query) {
-        Call<List<Anime>> call = kitsuService.searchAnime(query, 10);
+        Call<List<Anime>> call = kitsuService.searchAnime(query, 5);
         call.enqueue(new Callback<List<Anime>>() {
             @Override
             public void onResponse(@NonNull Call<List<Anime>> call, @NonNull Response<List<Anime>> response) {
@@ -84,20 +86,20 @@ public class SearchFragment extends Fragment {
                     searchResults.addAll(response.body());
                     adapter.notifyDataSetChanged();
                 } else {
-                    Log.e("Anime Response", "Error: " + response.errorBody());
+                    Log.e("Anime Response", "Error: " + response.toString());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Anime>> call, @NonNull Throwable t) {
                 Toast.makeText(getContext(), "Failed to retrieve Anime results", Toast.LENGTH_SHORT).show();
-                Log.d("Retrofit", "Anime search error: " + t.toString());
+                Log.d("Retrofit", "Anime search error: " + t.getMessage());
             }
         });
     }
 
     private void searchManga(String query) {
-        Call<List<Manga>> call = kitsuService.searchManga(query, 10);
+        Call<List<Manga>> call = kitsuService.searchManga(query, 5);
         call.enqueue(new Callback<List<Manga>>() {
             @Override
             public void onResponse(@NonNull Call<List<Manga>> call, @NonNull Response<List<Manga>> response) {
@@ -105,7 +107,7 @@ public class SearchFragment extends Fragment {
                     searchResults.addAll(response.body());
                     adapter.notifyDataSetChanged();
                 } else {
-                    Log.e("Manga Response", "Error: " + response.errorBody());
+                    Log.e("Manga Response", "Error: " + response.toString());
                 }
             }
 
