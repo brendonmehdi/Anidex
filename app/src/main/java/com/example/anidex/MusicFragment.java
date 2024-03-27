@@ -107,7 +107,7 @@ public class MusicFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Feel free to implement if needed
+
                 return false;
             }
         });
