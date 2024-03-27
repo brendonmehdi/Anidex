@@ -11,14 +11,14 @@ import java.util.List;
 public interface KitsuService {
     // Endpoint for searching anime by name
     @GET("anime")
-    Call<List<Anime>> searchAnime(
+    Call<KitsuResponse<Anime>> searchAnime(
             @Query("filter[text]") String query,
             @Query("page[limit]") int limit
     );
 
     // Endpoint for searching manga by name
     @GET("manga")
-    Call<List<Manga>> searchManga(
+    Call<KitsuResponse<Manga>> searchManga(
             @Query("filter[text]") String query,
             @Query("page[limit]") int limit
     );

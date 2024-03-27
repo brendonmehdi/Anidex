@@ -78,20 +78,26 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchAnime(String query) {
-        Call<List<Anime>> call = kitsuService.searchAnime(query, 5);
-        call.enqueue(new Callback<List<Anime>>() {
+        Call<KitsuResponse<Anime>> call = kitsuService.searchAnime(query, 5);
+        call.enqueue(new Callback<KitsuResponse<Anime>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Anime>> call, @NonNull Response<List<Anime>> response) {
+            public void onResponse(@NonNull Call<KitsuResponse<Anime>> call, @NonNull Response<KitsuResponse<Anime>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    searchResults.addAll(response.body());
-                    adapter.notifyDataSetChanged();
+                    KitsuResponse<Anime> kitsuResponse = response.body();
+                    List<Anime> animeList = kitsuResponse.getData();
+                    if (animeList != null && !animeList.isEmpty()) {
+                        searchResults.addAll(animeList);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Log.e("Anime Response", "Empty anime list");
+                    }
                 } else {
                     Log.e("Anime Response", "Error: " + response.toString());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Anime>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<KitsuResponse<Anime>> call, @NonNull Throwable t) {
                 Toast.makeText(getContext(), "Failed to retrieve Anime results", Toast.LENGTH_SHORT).show();
                 Log.d("Retrofit", "Anime search error: " + t.getMessage());
             }
@@ -99,24 +105,29 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchManga(String query) {
-        Call<List<Manga>> call = kitsuService.searchManga(query, 5);
-        call.enqueue(new Callback<List<Manga>>() {
+        Call<KitsuResponse<Manga>> call = kitsuService.searchManga(query, 5);
+        call.enqueue(new Callback<KitsuResponse<Manga>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Manga>> call, @NonNull Response<List<Manga>> response) {
+            public void onResponse(@NonNull Call<KitsuResponse<Manga>> call, @NonNull Response<KitsuResponse<Manga>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    searchResults.addAll(response.body());
-                    adapter.notifyDataSetChanged();
+                    KitsuResponse<Manga> kitsuResponse = response.body();
+                    List<Manga> mangaList = kitsuResponse.getData();
+                    if (mangaList != null && !mangaList.isEmpty()) {
+                        searchResults.addAll(mangaList);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Log.e("Manga Response", "Empty manga list");
+                    }
                 } else {
                     Log.e("Manga Response", "Error: " + response.toString());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Manga>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<KitsuResponse<Manga>> call, @NonNull Throwable t) {
                 Toast.makeText(getContext(), "Failed to retrieve Manga results", Toast.LENGTH_SHORT).show();
-                Log.d("Retrofit", "Manga search error: " + t.toString());
+                Log.d("Retrofit", "Manga search error: " + t.getMessage());
             }
         });
     }
-
 }

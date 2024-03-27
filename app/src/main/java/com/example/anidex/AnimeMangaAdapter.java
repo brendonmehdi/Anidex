@@ -64,23 +64,37 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
         }
 
         public void bindAnime(Anime anime) {
-            textName.setText(anime.getCanonicalTitle());
+            textName.setText(anime.getAttributes().getCanonicalTitle());
             textType.setText(anime.getType());
 
             // Load image using Picasso
-            Picasso.get()
-                    .load(anime.getPosterImage())
-                    .into(imageAnime);
+            String posterUrl = anime.getAttributes().getPosterImage().getMedium();
+            if (posterUrl != null && !posterUrl.isEmpty()) {
+                Picasso.get()
+                        .load(posterUrl)
+                        .placeholder(R.drawable.dragonballtest) // Placeholder image while loading
+                        .into(imageAnime);
+            } else {
+                // Use placeholder if URL is empty
+                imageAnime.setImageResource(R.drawable.dragonballtest);
+            }
         }
 
         public void bindManga(Manga manga) {
-            textName.setText(manga.getCanonicalTitle());
+            textName.setText(manga.getAttributes().getCanonicalTitle());
             textType.setText(manga.getType());
 
             // Load image using Picasso
-            Picasso.get()
-                    .load(manga.getPosterImage())
-                    .into(imageAnime);
+            String posterUrl = manga.getAttributes().getPosterImage().getMedium();
+            if (posterUrl != null && !posterUrl.isEmpty()) {
+                Picasso.get()
+                        .load(posterUrl)
+                        .placeholder(R.drawable.dragonballtest) // Placeholder image while loading
+                        .into(imageAnime);
+            } else {
+                // Use placeholder if URL is empty
+                imageAnime.setImageResource(R.drawable.dragonballtest);
+            }
         }
     }
 }
