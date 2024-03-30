@@ -1,4 +1,4 @@
-package com.example.anidex;
+package com.example.anidex.SearchFragment;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anidex.Models.Anime;
 import com.example.anidex.Models.Manga;
+import com.example.anidex.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

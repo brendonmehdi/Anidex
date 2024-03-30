@@ -1,4 +1,4 @@
-package com.example.anidex;
+package com.example.anidex.SearchFragment;
 
 import com.example.anidex.Models.Anime;
 import com.example.anidex.Models.Manga;
@@ -6,7 +6,6 @@ import com.example.anidex.Models.Manga;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import java.util.List;
 
 public interface KitsuService {
     // Endpoint for searching anime by name

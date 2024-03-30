@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="#FFBA68"
     android:paddingTop="0dp"
-    tools:context=".SearchFragment">
+    tools:context=".SearchFragment.SearchFragment">
 
     <android.widget.SearchView
         android:id="@+id/searchView"

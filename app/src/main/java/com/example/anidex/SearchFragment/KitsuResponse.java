@@ -1,4 +1,4 @@
-package com.example.anidex;
+package com.example.anidex.SearchFragment;
 
 import java.util.List;
 

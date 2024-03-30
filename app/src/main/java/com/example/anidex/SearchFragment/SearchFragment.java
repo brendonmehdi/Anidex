@@ -1,4 +1,4 @@
-package com.example.anidex;
+package com.example.anidex.SearchFragment;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,13 +10,13 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anidex.Models.Anime;
 import com.example.anidex.Models.Manga;
+import com.example.anidex.R;
 
 import java.util.ArrayList;
 import java.util.List;
