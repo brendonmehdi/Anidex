@@ -66,7 +66,7 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
 
         public void bindAnime(Anime anime) {
             textName.setText(anime.getAttributes().getCanonicalTitle());
-            textType.setText(anime.getType());
+            textType.setText(anime.getAttributes().getSubType());
 
             // Load image using Picasso
             String posterUrl = anime.getAttributes().getPosterImage().getMedium();

@@ -64,6 +64,9 @@ public class Anime implements Parcelable {
         @SerializedName("posterImage")
         private PosterImage posterImage;
 
+        @SerializedName("subtype") // New attribute subType
+        private String subType;
+
         public String getCanonicalTitle() {
             return canonicalTitle;
         }
@@ -80,9 +83,18 @@ public class Anime implements Parcelable {
             this.posterImage = posterImage;
         }
 
+        public String getSubType() {
+            return subType;
+        }
+
+        public void setSubType(String subType) {
+            this.subType = subType;
+        }
+
         protected Attributes(Parcel in) {
             canonicalTitle = in.readString();
             posterImage = in.readParcelable(PosterImage.class.getClassLoader());
+            subType = in.readString(); // Read subType from Parcel
         }
 
         public static final Creator<Attributes> CREATOR = new Creator<Attributes>() {
@@ -106,6 +118,7 @@ public class Anime implements Parcelable {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(canonicalTitle);
             dest.writeParcelable(posterImage, flags);
+            dest.writeString(subType); // Write subType to Parcel
         }
     }
 
