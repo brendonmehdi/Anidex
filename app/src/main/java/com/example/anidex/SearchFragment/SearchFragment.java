@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,10 +41,12 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         recyclerView = view.findViewById(R.id.searchRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         searchResults = new ArrayList<>();
         adapter = new AnimeMangaAdapter(getContext(), searchResults);
         recyclerView.setAdapter(adapter);
+        GridLayoutManager layoutManager=new GridLayoutManager(getContext(),2);
+        recyclerView.setLayoutManager(layoutManager);
 
         String baseUrl="https://kitsu.io/api/edge/";
 
@@ -60,6 +63,7 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (!TextUtils.isEmpty(query.trim())) {
+                    searchResults.clear();
                     searchAnime(query);
                     searchManga(query);
                 } else {

@@ -73,11 +73,11 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
             if (posterUrl != null && !posterUrl.isEmpty()) {
                 Picasso.get()
                         .load(posterUrl)
-                        .placeholder(R.drawable.dragonballtest) // Placeholder image while loading
+                        .placeholder(R.drawable.noimage) // Placeholder image while loading
                         .into(imageAnime);
             } else {
                 // Use placeholder if URL is empty
-                imageAnime.setImageResource(R.drawable.dragonballtest);
+                imageAnime.setImageResource(R.drawable.noimage);
             }
         }
 
@@ -90,11 +90,11 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
             if (posterUrl != null && !posterUrl.isEmpty()) {
                 Picasso.get()
                         .load(posterUrl)
-                        .placeholder(R.drawable.dragonballtest) // Placeholder image while loading
+                        .placeholder(R.drawable.noimage) // Placeholder image while loading
                         .into(imageAnime);
             } else {
                 // Use placeholder if URL is empty
-                imageAnime.setImageResource(R.drawable.dragonballtest);
+                imageAnime.setImageResource(R.drawable.noimage);
             }
         }
     }
