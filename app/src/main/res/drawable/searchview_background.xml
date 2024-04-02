@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Background color for the SearchView -->
-    <solid android:color="#FFA500" /> <!-- Orange color -->
+    <solid android:color="#FFA500" />
 
-    <!-- Darker orange stroke (outline) -->
     <stroke
-        android:color="#824700"
+        android:color="#F1D0A8"
         android:width="2dp" />
 
     <padding
@@ -14,5 +12,5 @@
         android:right="8dp"
         android:bottom="4dp" />
 
-    <!-- <corners android:radius="8dp" /> -->
+     <corners android:radius="8dp" />
 </shape>
