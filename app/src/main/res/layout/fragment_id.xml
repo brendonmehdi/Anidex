@@ -8,6 +8,7 @@
     tools:context=".IdFragment">
 
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="300dp"
@@ -50,6 +51,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonUpload" />
+
 
     <Button
         android:id="@+id/buttonUpload"

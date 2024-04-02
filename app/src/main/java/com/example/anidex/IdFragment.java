@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+
 import com.example.anidex.OpenAI.ApiResponse;
 import com.example.anidex.OpenAI.OpenAIApiService;
 
@@ -108,10 +109,25 @@ public class IdFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_id, container, false);
 
+//        imageView = view.findViewById(R.id.imageAnime);
+//        // Find the ImageView by its ID
+//        imageView = view.findViewById(R.id.imageAnime);
+
+        // Find the Button by its ID and set an OnClickListener
+        Button buttonUpload = view.findViewById(R.id.buttonUpload);
+        buttonUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Launch the content picker when the button is clicked
+                getContent.launch("image/*");
+            }
+        });
+
+
         // Initializes UI components.
         imageView = view.findViewById(R.id.imageView);
         imgText = view.findViewById(R.id.imageText);
-        Button buttonUpload = view.findViewById(R.id.buttonUpload);
+//        Button buttonUpload = view.findViewById(R.id.buttonUpload);
 
         // Sets a click listener on the upload button to launch the image picker.
         buttonUpload.setOnClickListener(v -> getContent.launch("image/*"));
