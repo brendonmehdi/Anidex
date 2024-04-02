@@ -25,9 +25,9 @@ public class FavFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fav, container, false);
-        recyclerView = view.findViewById(R.id.favoritesRecyclerView); // Make sure you have a RecyclerView in fragment_fav.xml
+        recyclerView = view.findViewById(R.id.favoritesRecyclerView);
         db = new DatabaseHelper(getContext());
-        favoriteAnimes = db.getAllFavoriteAnimes(); // Implement this method in DatabaseHelper
+        favoriteAnimes = db.getAllFavoriteAnimes();
         adapter = new FavoritesAdapter(favoriteAnimes, getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

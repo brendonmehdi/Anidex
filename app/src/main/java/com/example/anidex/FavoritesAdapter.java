@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anidex.Database.DatabaseHelper;
 import com.example.anidex.Models.Anime;
 
 import java.util.List;
@@ -17,11 +19,15 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
     private List<Anime> animeList;
     private Context context;
+    private DatabaseHelper db;
+
 
     public FavoritesAdapter(List<Anime> animeList, Context context) {
         this.animeList = animeList;
         this.context = context;
+        this.db = new DatabaseHelper(context); // Initialize DatabaseHelper here
     }
+
 
     @NonNull
     @Override
@@ -34,7 +40,16 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Anime anime = animeList.get(position);
         holder.titleTextView.setText(anime.getAttributes().getCanonicalTitle());
-        // Set more attributes as needed
+
+        holder.removeButton.setOnClickListener(v -> {
+            // Use the db instance to delete the anime from the database
+            db.deleteFavoriteAnime(anime);
+
+            // Remove the item from the list and notify the adapter
+            animeList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, animeList.size());
+        });
     }
 
     @Override
@@ -44,12 +59,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
-        // Define more views as needed
+        Button removeButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.text_view_title);
-            // Initialize more views as needed
+            removeButton = itemView.findViewById(R.id.remove_button); // Initialize the button
         }
     }
 }
