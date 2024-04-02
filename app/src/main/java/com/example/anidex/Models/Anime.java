@@ -64,8 +64,17 @@ public class Anime implements Parcelable {
         @SerializedName("posterImage")
         private PosterImage posterImage;
 
-        @SerializedName("subtype") // New attribute subType
+        @SerializedName("subtype")
         private String subType;
+
+        @SerializedName("popularityRank")
+        private int popularityRank;
+
+        @SerializedName("ratingRank")
+        private int ratingRank;
+
+        @SerializedName("createdAt")
+        private String createdAt;
 
         public String getCanonicalTitle() {
             return canonicalTitle;
@@ -91,10 +100,37 @@ public class Anime implements Parcelable {
             this.subType = subType;
         }
 
+        public int getPopularityRank() {
+            return popularityRank;
+        }
+
+        public void setPopularityRank(int popularityRank) {
+            this.popularityRank = popularityRank;
+        }
+
+        public int getRatingRank() {
+            return ratingRank;
+        }
+
+        public void setRatingRank(int ratingRank) {
+            this.ratingRank = ratingRank;
+        }
+
+        public String getCreatedAt() {
+            return createdAt;
+        }
+
+        public void setCreatedAt(String createdAt) {
+            this.createdAt = createdAt;
+        }
+
         protected Attributes(Parcel in) {
             canonicalTitle = in.readString();
             posterImage = in.readParcelable(PosterImage.class.getClassLoader());
-            subType = in.readString(); // Read subType from Parcel
+            subType = in.readString();
+            popularityRank = in.readInt();
+            ratingRank = in.readInt();
+            createdAt = in.readString();
         }
 
         public static final Creator<Attributes> CREATOR = new Creator<Attributes>() {
@@ -118,7 +154,10 @@ public class Anime implements Parcelable {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(canonicalTitle);
             dest.writeParcelable(posterImage, flags);
-            dest.writeString(subType); // Write subType to Parcel
+            dest.writeString(subType);
+            dest.writeInt(popularityRank);
+            dest.writeInt(ratingRank);
+            dest.writeString(createdAt);
         }
     }
 

@@ -6,7 +6,7 @@
     app:startDestination="@id/searchFragment">
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.anidex.HomeFragment"
+        android:name="com.example.anidex.HomeFragment.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment

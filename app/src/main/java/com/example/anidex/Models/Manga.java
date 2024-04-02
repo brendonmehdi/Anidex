@@ -64,6 +64,15 @@ public class Manga implements Parcelable {
         @SerializedName("posterImage")
         private PosterImage posterImage;
 
+        @SerializedName("popularityRank")
+        private int popularityRank;
+
+        @SerializedName("ratingRank")
+        private int ratingRank;
+
+        @SerializedName("createdAt")
+        private String createdAt;
+
         public String getCanonicalTitle() {
             return canonicalTitle;
         }
@@ -80,9 +89,36 @@ public class Manga implements Parcelable {
             this.posterImage = posterImage;
         }
 
+        public int getPopularityRank() {
+            return popularityRank;
+        }
+
+        public void setPopularityRank(int popularityRank) {
+            this.popularityRank = popularityRank;
+        }
+
+        public int getRatingRank() {
+            return ratingRank;
+        }
+
+        public void setRatingRank(int ratingRank) {
+            this.ratingRank = ratingRank;
+        }
+
+        public String getCreatedAt() {
+            return createdAt;
+        }
+
+        public void setCreatedAt(String createdAt) {
+            this.createdAt = createdAt;
+        }
+
         protected Attributes(Parcel in) {
             canonicalTitle = in.readString();
             posterImage = in.readParcelable(PosterImage.class.getClassLoader());
+            popularityRank = in.readInt();
+            ratingRank = in.readInt();
+            createdAt = in.readString();
         }
 
         public static final Creator<Attributes> CREATOR = new Creator<Attributes>() {
@@ -106,6 +142,9 @@ public class Manga implements Parcelable {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(canonicalTitle);
             dest.writeParcelable(posterImage, flags);
+            dest.writeInt(popularityRank);
+            dest.writeInt(ratingRank);
+            dest.writeString(createdAt);
         }
     }
 

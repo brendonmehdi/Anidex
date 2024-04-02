@@ -19,7 +19,7 @@ import java.util.List;
 
 public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.ViewHolder> {
 
-    private List<Object> items; 
+    private List<Object> items;
     private Context context;
 
     public AnimeMangaAdapter(Context context, List<Object> items) {
