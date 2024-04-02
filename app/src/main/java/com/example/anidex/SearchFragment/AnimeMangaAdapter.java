@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.anidex.FavoritesManager;
+import com.example.anidex.Favs.FavoritesManager;
 import com.example.anidex.Models.Anime;
 import com.example.anidex.Models.Manga;
 import com.example.anidex.R;
@@ -60,6 +60,7 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
         TextView textName;
         TextView textType;
         ImageView starIcon; // Star icon for marking as favorite
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

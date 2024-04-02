@@ -1,4 +1,4 @@
-package com.example.anidex;
+package com.example.anidex.Favs;
 
 import android.os.Bundle;
 
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.anidex.Database.DatabaseHelper;
 import com.example.anidex.Models.Anime;
+import com.example.anidex.R;
 
 import java.util.List;
 
@@ -26,11 +27,14 @@ public class FavFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fav, container, false);
         recyclerView = view.findViewById(R.id.favoritesRecyclerView);
+
         db = new DatabaseHelper(getContext());
         favoriteAnimes = db.getAllFavoriteAnimes();
         adapter = new FavoritesAdapter(favoriteAnimes, getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
         return view;
     }
 }
