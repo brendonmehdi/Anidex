@@ -1,11 +1,14 @@
 package com.example.anidex.SearchFragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchFragment extends Fragment {
+    private ProgressBar progressBar;
 
     private RecyclerView recyclerView;
     private AnimeMangaAdapter adapter;
@@ -39,6 +43,8 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+        progressBar = view.findViewById(R.id.progressBarAnime);
 
         recyclerView = view.findViewById(R.id.searchRecyclerView);
         //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -66,6 +72,20 @@ public class SearchFragment extends Fragment {
                     searchResults.clear();
                     searchAnime(query);
                     searchManga(query);
+
+                    //makes the progress the bar visible
+                    progressBar.setVisibility(View.VISIBLE);
+
+                    // Hide the keyboard on search
+                    View view = getActivity().getCurrentFocus();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+
+                    // Clear focus from SearchView
+                    searchView.clearFocus();
+
                 } else {
                     Toast.makeText(getContext(), "Please enter a search query", Toast.LENGTH_SHORT).show();
                 }
@@ -92,6 +112,7 @@ public class SearchFragment extends Fragment {
                     if (animeList != null && !animeList.isEmpty()) {
                         searchResults.addAll(animeList);
                         adapter.notifyDataSetChanged();
+                        progressBar.setVisibility(View.GONE);
                     } else {
                         Log.e("Anime Response", "Empty anime list");
                     }

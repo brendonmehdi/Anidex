@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.anidex.R;
 
 import java.util.List;
-
+//binds the data from anime themes to views in the RecyclerView.
 public class AnimeThemesAdapter extends RecyclerView.Adapter<AnimeThemesAdapter.ViewHolder> {
 
     private Context context;

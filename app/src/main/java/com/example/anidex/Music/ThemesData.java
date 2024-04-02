@@ -1,7 +1,8 @@
 package com.example.anidex.Music;
 
 import java.util.List;
-
+//captures the structure of the response for the
+// /anime/{id}/themes endpoint of the API for parsing and utilizing the themes data in app.
 public class ThemesData {
     private List<String> openings;
     private List<String> endings;

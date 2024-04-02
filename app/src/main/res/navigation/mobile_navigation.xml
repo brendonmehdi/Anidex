@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/navigation_music"
-        android:name="com.example.anidex.MusicFragment"
+        android:name="com.example.anidex.Music.MusicFragment"
         android:label="Music"
         tools:layout="@layout/fragment_music" />
     <fragment

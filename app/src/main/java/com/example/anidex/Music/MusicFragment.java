@@ -1,4 +1,4 @@
-package com.example.anidex;
+package com.example.anidex.Music;
 
 import android.os.Bundle;
 
@@ -9,15 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 
-import com.example.anidex.Music.AnimeSearchResponse;
-import com.example.anidex.Music.AnimeTheme;
-import com.example.anidex.Music.AnimeThemesAdapter;
-import com.example.anidex.Music.AnimeThemesResponse;
-import com.example.anidex.Music.JikanApiService;
-import com.example.anidex.Music.RetrofitClient;
-import com.example.anidex.Music.ThemesData;
+import com.example.anidex.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,52 +21,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MusicFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class MusicFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public MusicFragment() {
-
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MusicFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MusicFragment newInstance(String param1, String param2) {
-        MusicFragment fragment = new MusicFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    // Add ProgressBar as a member variable
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,17 +34,24 @@ public class MusicFragment extends Fragment {
         RecyclerView rvAnimeThemes = view.findViewById(R.id.rvAnimeThemes);
         rvAnimeThemes.setLayoutManager(new LinearLayoutManager(getContext()));
 
+
+        progressBar = view.findViewById(R.id.progressBarAnime);
+
         JikanApiService service = RetrofitClient.getService();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Use the search endpoint to find an anime by title
+                // Show the ProgressBar when search is initiated
+                progressBar.setVisibility(View.VISIBLE);
+
                 service.searchAnime(query).enqueue(new Callback<AnimeSearchResponse>() {
                     @Override
                     public void onResponse(Call<AnimeSearchResponse> call, Response<AnimeSearchResponse> response) {
-                        if (response.isSuccessful() && response.body() != null) {
+                        // Hide the ProgressBar on receiving a response
+                        progressBar.setVisibility(View.GONE);
 
+                        if (response.isSuccessful() && response.body() != null) {
                             int animeId = response.body().getData().get(0).getMalId();
                             fetchAnimeThemes(animeId, service, rvAnimeThemes);
                         }
@@ -99,7 +59,10 @@ public class MusicFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<AnimeSearchResponse> call, Throwable t) {
+                        // Hide the ProgressBar on failure to receive a response
+                        progressBar.setVisibility(View.GONE);
                         // Handle failure
+                        System.out.println("Error:" + t.toString());
                     }
                 });
                 return false;
@@ -114,6 +77,9 @@ public class MusicFragment extends Fragment {
 
         return view;
     }
+
+
+
 
     private void fetchAnimeThemes(int animeId, JikanApiService service, RecyclerView recyclerView) {
         service.getAnimeThemes(animeId).enqueue(new Callback<AnimeThemesResponse>() {
@@ -139,7 +105,7 @@ public class MusicFragment extends Fragment {
 
             @Override
             public void onFailure(Call<AnimeThemesResponse> call, Throwable t) {
-                // Handle failure
+                System.out.println("Error:" + t.toString());
             }
         });
     }

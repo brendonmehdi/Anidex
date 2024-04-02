@@ -9,6 +9,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface JikanApiService {
+//    making network requests to fetch anime information and themes
     @GET("anime/{id}/themes")
     Call<AnimeThemesResponse> getAnimeThemes(@Path("id") int animeId);
 

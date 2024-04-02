@@ -4,6 +4,7 @@ import com.example.anidex.Music.AnimeSearchItem;
 
 import java.util.List;
 
+//used to search for data
 public class AnimeSearchResponse {
     private List<AnimeSearchItem> data;
 

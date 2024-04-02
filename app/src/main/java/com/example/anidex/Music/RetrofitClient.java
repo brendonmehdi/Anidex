@@ -4,7 +4,7 @@ import com.example.anidex.Music.JikanApiService;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+//Provides a Retrofit instance configured to communicate with the Jikan API.
 public class RetrofitClient {
     private static Retrofit retrofit = null;
     private static final String BASE_URL = "https://api.jikan.moe/v4/";
