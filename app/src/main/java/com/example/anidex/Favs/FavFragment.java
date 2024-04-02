@@ -40,7 +40,12 @@ public class FavFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        refreshFavorites();
+        List<Object> animeFavorites = db.getAllFavorites("anime");
+        List<Object> mangaFavorites = db.getAllFavorites("manga");
+        favoriteAnimes.clear();
+        favoriteAnimes.addAll(animeFavorites);
+        favoriteAnimes.addAll(mangaFavorites);
+        adapter.notifyDataSetChanged(); // Ensure your adapter handles notifyDataSetChanged correctly.
     }
 
     private void refreshFavorites() {

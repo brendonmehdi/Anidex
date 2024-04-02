@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import com.example.anidex.Models.Anime;
 import com.example.anidex.Models.Manga;
 import java.util.ArrayList;
@@ -50,13 +52,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         String externalId = favorite instanceof Anime ? ((Anime) favorite).getId() : ((Manga) favorite).getId();
         String title = favorite instanceof Anime ? ((Anime) favorite).getAttributes().getCanonicalTitle() : ((Manga) favorite).getAttributes().getCanonicalTitle();
+        String comment = favorite instanceof Anime ? ((Anime) favorite).getUserComment() : ((Manga) favorite).getUserComment();
 
         values.put(COLUMN_EXTERNAL_ID, externalId);
         values.put(COLUMN_TITLE, title);
         values.put(COLUMN_TYPE, type);
+        values.put(COLUMN_COMMENT, comment); // Ensure you're capturing comments correctly.
 
         // Use insert with conflict resolution to avoid duplicate entries
-        db.insertWithOnConflict(TABLE_FAVORITES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        long result = db.insertWithOnConflict(TABLE_FAVORITES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        if (result == -1) {
+            Log.e("DatabaseHelper", "Failed to insert manga into favorites.");
+        } else {
+            Log.d("DatabaseHelper", "Manga inserted into favorites successfully.");
+        }
         db.close();
     }
 
@@ -65,32 +74,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.query(TABLE_FAVORITES, null, COLUMN_TYPE + "=?", new String[]{type}, null, null, null);
 
-        if (cursor.moveToFirst()) {
-            do {
-                String externalId = cursor.getString(cursor.getColumnIndex(COLUMN_EXTERNAL_ID));
-                String title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE));
+        int externalIdIndex = cursor.getColumnIndex(COLUMN_EXTERNAL_ID);
+        int titleIndex = cursor.getColumnIndex(COLUMN_TITLE);
 
-                if ("anime".equals(type)) {
-                    Anime anime = new Anime();
-                    anime.setId(externalId);
-                    Anime.Attributes attributes = new Anime.Attributes();
-                    attributes.setCanonicalTitle(title);
-                    anime.setAttributes(attributes);
-                    favoritesList.add(anime);
-                } else if ("manga".equals(type)) {
-                    Manga manga = new Manga();
-                    manga.setId(externalId);
-                    Manga.Attributes attributes = new Manga.Attributes();
-                    attributes.setCanonicalTitle(title);
-                    manga.setAttributes(attributes);
-                    favoritesList.add(manga);
-                }
-            } while (cursor.moveToNext());
+        // Verify that both indexes are valid
+        if (externalIdIndex != -1 && titleIndex != -1) {
+            if (cursor.moveToFirst()) {
+                do {
+                    String externalId = cursor.getString(externalIdIndex);
+                    String title = cursor.getString(titleIndex);
+
+                    if ("anime".equals(type)) {
+                        Anime anime = new Anime();
+                        anime.setId(externalId);
+                        Anime.Attributes attributes = new Anime.Attributes();
+                        attributes.setCanonicalTitle(title);
+                        anime.setAttributes(attributes);
+                        favoritesList.add(anime);
+                    } else if ("manga".equals(type)) {
+                        Manga manga = new Manga();
+                        manga.setId(externalId);
+                        Manga.Attributes attributes = new Manga.Attributes();
+                        attributes.setCanonicalTitle(title);
+                        manga.setAttributes(attributes);
+                        favoritesList.add(manga);
+                    }
+                } while (cursor.moveToNext());
+            }
+        } else {
+            // Handle the case where the columns were not found
+            Log.e("DatabaseHelper", "Required columns not found when fetching favorites.");
         }
         cursor.close();
         db.close();
         return favoritesList;
     }
+
 
     public void deleteFavorite(String externalId, String type) {
         SQLiteDatabase db = this.getWritableDatabase();

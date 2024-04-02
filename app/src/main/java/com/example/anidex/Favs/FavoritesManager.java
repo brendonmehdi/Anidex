@@ -6,7 +6,6 @@ import com.example.anidex.Database.DatabaseHelper;
 import com.example.anidex.Models.Anime;
 import com.example.anidex.Models.Manga;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FavoritesManager {
@@ -48,17 +47,22 @@ public class FavoritesManager {
         dbHelper.deleteFavorite(id, type);
     }
 
-    // Method to update an anime's comment or any other detail
     public void updateFavoriteAnime(Anime anime) {
+        if (anime == null) {
+            Log.e("FavoritesManager", "Anime is null in updateFavoriteAnime method.");
+            return;
+        }
         dbHelper.updateFavoriteAnime(anime);
     }
 
-    // Method to update a manga's comment or any other detail
     public void updateFavoriteManga(Manga manga) {
+        if (manga == null) {
+            Log.e("FavoritesManager", "Manga is null in updateFavoriteManga method.");
+            return;
+        }
         dbHelper.updateFavoriteManga(manga);
     }
 
-    // This method now uses the updated structure to fetch all favorites of a given type.
     public List<Object> getAllFavorites(String type) {
         return dbHelper.getAllFavorites(type);
     }

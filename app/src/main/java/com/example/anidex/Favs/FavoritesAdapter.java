@@ -41,14 +41,22 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+
         Object item = animeList.get(position);
 
         if (item instanceof Anime) {
             Anime anime = (Anime) item;
             holder.bind(anime.getAttributes().getCanonicalTitle(), anime.getUserComment());
-        } else if (item instanceof Manga) {
+
+            Log.d("AnimeBind", "Binding anime: " + anime.getAttributes().getCanonicalTitle());
+        }
+        if (item instanceof Manga) {
             Manga manga = (Manga) item;
             holder.bind(manga.getAttributes().getCanonicalTitle(), manga.getUserComment());
+            // Ensure you're setting the manga data correctly
+            // Log here to confirm manga data is reaching this point
+            Log.d("MangaBind", "Binding manga: " + manga.getAttributes().getCanonicalTitle());
         }
 
         holder.removeButton.setOnClickListener(v -> {
