@@ -20,7 +20,7 @@ import java.util.List;
 public class FavFragment extends Fragment {
     private RecyclerView recyclerView;
     private FavoritesAdapter adapter;
-    private List<Anime> favoriteAnimes;
+    private List<Object> favoriteAnimes;
     private DatabaseHelper db;
 
     @Override
@@ -29,12 +29,25 @@ public class FavFragment extends Fragment {
         recyclerView = view.findViewById(R.id.favoritesRecyclerView);
 
         db = new DatabaseHelper(getContext());
-        favoriteAnimes = db.getAllFavoriteAnimes();
+        // Adjust this line to use the generalized method, if you have such in FavoritesManager
+        favoriteAnimes = db.getAllFavorites("anime"); // Assuming this method now exists and returns List<Anime>
         adapter = new FavoritesAdapter(favoriteAnimes, getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
         return view;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshFavorites();
+    }
+
+    private void refreshFavorites() {
+        favoriteAnimes = db.getAllFavorites("anime"); // Adjust as necessary for your implementation
+        adapter = new FavoritesAdapter(favoriteAnimes, getContext());
+        recyclerView.setAdapter(adapter);
+    }
+
+
 }
