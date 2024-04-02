@@ -43,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void addFavoriteAnime(Anime anime) {
+    public void addFavoriteAnime(Anime anime) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_TITLE, anime.getAttributes().getCanonicalTitle());
@@ -54,20 +54,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    List<Anime> getAllFavoriteAnimes() {
+    public List<Anime> getAllFavoriteAnimes() {
         List<Anime> animeList = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_FAVORITES;
+        String selectQuery = "SELECT * FROM " + TABLE_FAVORITES;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
+        int idIndex = cursor.getColumnIndex(COLUMN_ID);
+        int titleIndex = cursor.getColumnIndex(COLUMN_TITLE);
+        int reviewIndex = cursor.getColumnIndex(COLUMN_REVIEW);
+        int commentIndex = cursor.getColumnIndex(COLUMN_COMMENT);
+
+        if (idIndex == -1 || titleIndex == -1 || reviewIndex == -1 || commentIndex == -1) {
+            // One of the columns doesn't exist in the table
+            // Handle this error as needed
+            cursor.close();
+            db.close();
+            return animeList; // Return the empty list or throw an exception
+        }
+
         if (cursor.moveToFirst()) {
             do {
                 Anime anime = new Anime();
-                anime.setId(cursor.getString(0));
-                anime.getAttributes().setCanonicalTitle(cursor.getString(1));
-                anime.setUserReview(cursor.getString(2));
-                anime.setUserComment(cursor.getString(3));
+                Anime.Attributes attributes = new Anime.Attributes();
+
+                anime.setId(cursor.getString(idIndex));
+                attributes.setCanonicalTitle(cursor.getString(titleIndex));
+                anime.setUserReview(cursor.getString(reviewIndex));
+                anime.setUserComment(cursor.getString(commentIndex));
+
+                anime.setAttributes(attributes);
+
                 animeList.add(anime);
             } while (cursor.moveToNext());
         }
@@ -92,5 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(TABLE_FAVORITES, COLUMN_ID + " = ?", new String[] { String.valueOf(anime.getId()) });
         db.close();
     }
+
+
 }
 

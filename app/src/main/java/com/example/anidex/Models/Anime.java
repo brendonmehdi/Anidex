@@ -72,38 +72,22 @@ public class Anime implements Parcelable {
         @SerializedName("posterImage")
         private PosterImage posterImage;
 
-        @SerializedName("subtype") // New attribute subType
+        @SerializedName("subtype")
         private String subType;
 
-        public String getCanonicalTitle() {
-            return canonicalTitle;
+        // No-argument constructor
+        public Attributes() {
         }
 
-        public void setCanonicalTitle(String canonicalTitle) {
-            this.canonicalTitle = canonicalTitle;
-        }
-
-        public PosterImage getPosterImage() {
-            return posterImage;
-        }
-
-        public void setPosterImage(PosterImage posterImage) {
-            this.posterImage = posterImage;
-        }
-
-        public String getSubType() {
-            return subType;
-        }
-
-        public void setSubType(String subType) {
-            this.subType = subType;
-        }
-
+        // Existing constructor that accepts a Parcel
         protected Attributes(Parcel in) {
             canonicalTitle = in.readString();
             posterImage = in.readParcelable(PosterImage.class.getClassLoader());
-            subType = in.readString(); // Read subType from Parcel
+            subType = in.readString();
         }
+
+        // Existing Parcelable implementation
+        // ...
 
         public static final Creator<Attributes> CREATOR = new Creator<Attributes>() {
             @Override
@@ -127,6 +111,30 @@ public class Anime implements Parcelable {
             dest.writeString(canonicalTitle);
             dest.writeParcelable(posterImage, flags);
             dest.writeString(subType); // Write subType to Parcel
+        }
+
+        public String getCanonicalTitle() {
+            return canonicalTitle;
+        }
+
+        public void setCanonicalTitle(String canonicalTitle) {
+            this.canonicalTitle = canonicalTitle;
+        }
+
+        public PosterImage getPosterImage() {
+            return posterImage;
+        }
+
+        public void setPosterImage(PosterImage posterImage) {
+            this.posterImage = posterImage;
+        }
+
+        public String getSubType() {
+            return subType;
+        }
+
+        public void setSubType(String subType) {
+            this.subType = subType;
         }
     }
 
