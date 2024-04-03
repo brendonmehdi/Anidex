@@ -31,14 +31,19 @@ public class AnimeFragment extends Fragment {
     private RecyclerView popularRecyclerView;
     private RecyclerView newRecyclerView;
     private RecyclerView topRankedRecyclerView;
+    private RecyclerView trendingRecyclerview;
 
     private AnimeAdapter popularAdapter;
     private AnimeAdapter newAdapter;
     private AnimeAdapter topRankedAdapter;
+    private AnimeAdapter trendingAdapter;
 
     private List<Anime> popularAnimeList = new ArrayList<>();
     private List<Anime> newAnimeList = new ArrayList<>();
     private List<Anime> topRankedAnimeList = new ArrayList<>();
+    private List<Anime> trendingAnimeList = new ArrayList<>();
+
+
     private KitsuService kitsuService;
 
     public AnimeFragment() {
@@ -68,25 +73,31 @@ public class AnimeFragment extends Fragment {
         popularRecyclerView = view.findViewById(R.id.recyclerViewPopularAnime);
         newRecyclerView = view.findViewById(R.id.recyclerViewNewAnime);
         topRankedRecyclerView = view.findViewById(R.id.recyclerViewTopRankedAnime);
+        trendingRecyclerview=view.findViewById(R.id.recyclerviewTrending);
 
         // Initialize adapters
         popularAdapter = new AnimeAdapter(popularAnimeList, getContext());
         newAdapter = new AnimeAdapter(newAnimeList, getContext());
         topRankedAdapter = new AnimeAdapter(topRankedAnimeList, getContext());
+        trendingAdapter = new AnimeAdapter(trendingAnimeList, getContext());
+
 
         // Set layout manager for each RecyclerView
         popularRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         newRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         topRankedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        trendingRecyclerview.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
 
         // Set adapters to RecyclerViews
         popularRecyclerView.setAdapter(popularAdapter);
         newRecyclerView.setAdapter(newAdapter);
         topRankedRecyclerView.setAdapter(topRankedAdapter);
+        trendingRecyclerview.setAdapter(trendingAdapter);
 
         loadPopularAnime();
         loadNewAnime();
-        //loadTopRankedAnime();
+        loadTopRankedAnime();
         loadTrendingAnime();
     }
 
@@ -132,36 +143,36 @@ public class AnimeFragment extends Fragment {
         });
     }
 
-//    private void loadTopRankedAnime() {
-//        Call<KitsuResponse<Anime>> topRankedAnimeCall = kitsuService.getTopRankedAnime("ratingRank", 10);
-//        topRankedAnimeCall.enqueue(new Callback<KitsuResponse<Anime>>() {
-//            @Override
-//            public void onResponse(Call<KitsuResponse<Anime>> call, Response<KitsuResponse<Anime>> response) {
-//                if (response.isSuccessful() && response.body() != null) {
-//                    topRankedAnimeList.clear(); // Clear the list before adding new data
-//                    topRankedAnimeList.addAll(response.body().getData());
-//                    topRankedAdapter.notifyDataSetChanged();
-//                } else {
-//                    Log.d("Retrofit", "Anime search error: " + response.toString());
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<KitsuResponse<Anime>> call, Throwable t) {
-//                Log.d("Retrofit", "Anime search error: " + t.getMessage());
-//            }
-//        });
-//    }
+    private void loadTopRankedAnime() {
+        Call<KitsuResponse<Anime>> topRankedAnimeCall = kitsuService.getTopRankedAnime("ratingRank", 10);
+        topRankedAnimeCall.enqueue(new Callback<KitsuResponse<Anime>>() {
+            @Override
+            public void onResponse(Call<KitsuResponse<Anime>> call, Response<KitsuResponse<Anime>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    topRankedAnimeList.clear(); // Clear the list before adding new data
+                    topRankedAnimeList.addAll(response.body().getData());
+                    topRankedAdapter.notifyDataSetChanged();
+                } else {
+                    Log.d("Retrofit", "Anime search error: " + response.toString());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KitsuResponse<Anime>> call, Throwable t) {
+                Log.d("Retrofit", "Anime search error: " + t.getMessage());
+            }
+        });
+    }
 private void loadTrendingAnime() {
     Call<KitsuResponse<Anime>> trendingAnimeCall = kitsuService.getTrendingAnime(10);
     trendingAnimeCall.enqueue(new Callback<KitsuResponse<Anime>>() {
         @Override
         public void onResponse(Call<KitsuResponse<Anime>> call, Response<KitsuResponse<Anime>> response) {
             if (response.isSuccessful() && response.body() != null) {
-                topRankedAnimeList.clear(); // Clear the list before adding new data
-                topRankedAnimeList.addAll(response.body().getData());
-                topRankedAdapter.notifyDataSetChanged();
+                trendingAnimeList.clear(); // Clear the list before adding new data
+                trendingAnimeList.addAll(response.body().getData());
+                trendingAdapter.notifyDataSetChanged();
             } else {
                 Log.d("Retrofit", "Anime search error: " + response.toString());
             }

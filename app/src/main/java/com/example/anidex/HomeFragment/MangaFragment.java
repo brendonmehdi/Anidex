@@ -32,14 +32,20 @@ public class MangaFragment extends Fragment {
     private RecyclerView popularRecyclerView;
     private RecyclerView newRecyclerView;
     private RecyclerView topRankedRecyclerView;
+    private RecyclerView trendingRecyclerView;
+
+
 
     private MangaAdapter popularAdapter;
     private MangaAdapter newAdapter;
     private MangaAdapter topRankedAdapter;
+    private MangaAdapter trendingAdapter;
 
     private List<Manga> popularMangaList = new ArrayList<>();
     private List<Manga> newMangaList = new ArrayList<>();
     private List<Manga> topRankedMangaList = new ArrayList<>();
+    private List<Manga> trendingMangaList = new ArrayList<>();
+
     private KitsuService kitsuService;
 
     public MangaFragment() {
@@ -69,25 +75,32 @@ public class MangaFragment extends Fragment {
         popularRecyclerView = view.findViewById(R.id.recyclerViewPopularManga);
         newRecyclerView = view.findViewById(R.id.recyclerViewNewManga);
         topRankedRecyclerView = view.findViewById(R.id.recyclerViewTopRankedManga);
+        trendingRecyclerView = view.findViewById(R.id.recyclerviewTrendingManga);
 
         // Initialize adapters
         popularAdapter = new MangaAdapter(popularMangaList, getContext());
         newAdapter = new MangaAdapter(newMangaList, getContext());
         topRankedAdapter = new MangaAdapter(topRankedMangaList, getContext());
+        trendingAdapter = new MangaAdapter(trendingMangaList, getContext());
+
 
         // Set layout manager for each RecyclerView
         popularRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         newRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         topRankedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        trendingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
 
         // Set adapters to RecyclerViews
         popularRecyclerView.setAdapter(popularAdapter);
         newRecyclerView.setAdapter(newAdapter);
         topRankedRecyclerView.setAdapter(topRankedAdapter);
+        trendingRecyclerView.setAdapter(trendingAdapter);
+
 
         loadPopularManga();
         loadNewManga();
-        //loadTopRankedManga();
+        loadTopRankedManga();
         loadTrendingManga();
     }
 
@@ -133,26 +146,26 @@ public class MangaFragment extends Fragment {
         });
     }
 
-//    private void loadTopRankedManga() {
-//        Call<KitsuResponse<Manga>> topRankedMangaCall = kitsuService.getTopRankedManga("ratingRank", 10);
-//        topRankedMangaCall.enqueue(new Callback<KitsuResponse<Manga>>() {
-//            @Override
-//            public void onResponse(Call<KitsuResponse<Manga>> call, Response<KitsuResponse<Manga>> response) {
-//                if (response.isSuccessful() && response.body() != null) {
-//                    topRankedMangaList.clear(); // Clear the list before adding new data
-//                    topRankedMangaList.addAll(response.body().getData());
-//                    topRankedAdapter.notifyDataSetChanged();
-//                } else {
-//                    Log.d("Retrofit", "Manga search error: " + response.toString());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<KitsuResponse<Manga>> call, Throwable t) {
-//                Log.d("Retrofit", "Manga search error: " + t.getMessage());
-//            }
-//        });
-//    }
+    private void loadTopRankedManga() {
+        Call<KitsuResponse<Manga>> topRankedMangaCall = kitsuService.getTopRankedManga("ratingRank", 10);
+        topRankedMangaCall.enqueue(new Callback<KitsuResponse<Manga>>() {
+            @Override
+            public void onResponse(Call<KitsuResponse<Manga>> call, Response<KitsuResponse<Manga>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    topRankedMangaList.clear(); // Clear the list before adding new data
+                    topRankedMangaList.addAll(response.body().getData());
+                    topRankedAdapter.notifyDataSetChanged();
+                } else {
+                    Log.d("Retrofit", "Manga search error: " + response.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KitsuResponse<Manga>> call, Throwable t) {
+                Log.d("Retrofit", "Manga search error: " + t.getMessage());
+            }
+        });
+    }
 
     private void loadTrendingManga() {
         Call<KitsuResponse<Manga>> trendingMangaCall = kitsuService.getTrendingManga(10);
@@ -160,9 +173,9 @@ public class MangaFragment extends Fragment {
             @Override
             public void onResponse(Call<KitsuResponse<Manga>> call, Response<KitsuResponse<Manga>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    topRankedMangaList.clear(); // Clear the list before adding new data
-                    topRankedMangaList.addAll(response.body().getData());
-                    topRankedAdapter.notifyDataSetChanged();
+                    trendingMangaList.clear(); // Clear the list before adding new data
+                    trendingMangaList.addAll(response.body().getData());
+                    trendingAdapter.notifyDataSetChanged();
                 } else {
                     Log.d("Retrofit", "Anime search error: " + response.toString());
                 }

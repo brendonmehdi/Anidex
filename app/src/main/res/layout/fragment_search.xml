@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/searchview_background"
+        android:searchIcon="@drawable/baseline_saved_search_24"
         android:layout_marginTop="0dp"
         android:paddingTop="0dp" >
 
@@ -32,6 +33,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="622dp" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
