@@ -63,4 +63,16 @@ public interface KitsuService {
             @Query("sort") String sort,
             @Query("page[limit]") int limit
     );
+
+    // Endpoint for getting trending anime
+    @GET("trending/anime")
+    Call<KitsuResponse<Anime>> getTrendingAnime(
+            @Query("page[limit]") int limit
+    );
+
+    // Endpoint for getting trending manga
+    @GET("trending/manga")
+    Call<KitsuResponse<Manga>> getTrendingManga(
+            @Query("page[limit]") int limit
+    );
 }

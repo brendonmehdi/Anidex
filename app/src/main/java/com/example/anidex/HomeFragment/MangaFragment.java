@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anidex.Models.Anime;
 import com.example.anidex.Models.Manga;
 import com.example.anidex.R;
 import com.example.anidex.SearchFragment.KitsuResponse;
@@ -86,7 +87,8 @@ public class MangaFragment extends Fragment {
 
         loadPopularManga();
         loadNewManga();
-        loadTopRankedManga();
+        //loadTopRankedManga();
+        loadTrendingManga();
     }
 
     private void loadPopularManga() {
@@ -131,9 +133,30 @@ public class MangaFragment extends Fragment {
         });
     }
 
-    private void loadTopRankedManga() {
-        Call<KitsuResponse<Manga>> topRankedMangaCall = kitsuService.getTopRankedManga("ratingRank", 10);
-        topRankedMangaCall.enqueue(new Callback<KitsuResponse<Manga>>() {
+//    private void loadTopRankedManga() {
+//        Call<KitsuResponse<Manga>> topRankedMangaCall = kitsuService.getTopRankedManga("ratingRank", 10);
+//        topRankedMangaCall.enqueue(new Callback<KitsuResponse<Manga>>() {
+//            @Override
+//            public void onResponse(Call<KitsuResponse<Manga>> call, Response<KitsuResponse<Manga>> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    topRankedMangaList.clear(); // Clear the list before adding new data
+//                    topRankedMangaList.addAll(response.body().getData());
+//                    topRankedAdapter.notifyDataSetChanged();
+//                } else {
+//                    Log.d("Retrofit", "Manga search error: " + response.toString());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<KitsuResponse<Manga>> call, Throwable t) {
+//                Log.d("Retrofit", "Manga search error: " + t.getMessage());
+//            }
+//        });
+//    }
+
+    private void loadTrendingManga() {
+        Call<KitsuResponse<Manga>> trendingMangaCall = kitsuService.getTrendingManga(10);
+        trendingMangaCall.enqueue(new Callback<KitsuResponse<Manga>>() {
             @Override
             public void onResponse(Call<KitsuResponse<Manga>> call, Response<KitsuResponse<Manga>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -141,13 +164,13 @@ public class MangaFragment extends Fragment {
                     topRankedMangaList.addAll(response.body().getData());
                     topRankedAdapter.notifyDataSetChanged();
                 } else {
-                    Log.d("Retrofit", "Manga search error: " + response.toString());
+                    Log.d("Retrofit", "Anime search error: " + response.toString());
                 }
             }
 
             @Override
             public void onFailure(Call<KitsuResponse<Manga>> call, Throwable t) {
-                Log.d("Retrofit", "Manga search error: " + t.getMessage());
+                Log.d("Retrofit", "Anime search error: " + t.getMessage());
             }
         });
     }

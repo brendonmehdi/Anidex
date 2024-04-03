@@ -64,6 +64,9 @@ public class Manga implements Parcelable {
         @SerializedName("posterImage")
         private PosterImage posterImage;
 
+        @SerializedName("subtype")
+        private String subType;
+
         @SerializedName("popularityRank")
         private int popularityRank;
 
@@ -87,6 +90,14 @@ public class Manga implements Parcelable {
 
         public void setPosterImage(PosterImage posterImage) {
             this.posterImage = posterImage;
+        }
+
+        public String getSubType() {
+            return subType;
+        }
+
+        public void setSubType(String subType) {
+            this.subType = subType;
         }
 
         public int getPopularityRank() {
@@ -116,6 +127,7 @@ public class Manga implements Parcelable {
         protected Attributes(Parcel in) {
             canonicalTitle = in.readString();
             posterImage = in.readParcelable(PosterImage.class.getClassLoader());
+            subType = in.readString();
             popularityRank = in.readInt();
             ratingRank = in.readInt();
             createdAt = in.readString();
@@ -142,6 +154,7 @@ public class Manga implements Parcelable {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(canonicalTitle);
             dest.writeParcelable(posterImage, flags);
+            dest.writeString(subType);
             dest.writeInt(popularityRank);
             dest.writeInt(ratingRank);
             dest.writeString(createdAt);

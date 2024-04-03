@@ -60,7 +60,7 @@ public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MangaViewHol
         public void bind(Manga manga) {
             // Set data to views
             titleTextView.setText(manga.getAttributes().getCanonicalTitle());
-            subtypeTextView.setText(manga.getType());
+            subtypeTextView.setText(manga.getAttributes().getSubType());
 
             // Load image using Picasso
             Picasso.get().load(manga.getAttributes().getPosterImage().getMedium()).into(imageView);

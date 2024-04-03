@@ -86,7 +86,8 @@ public class AnimeFragment extends Fragment {
 
         loadPopularAnime();
         loadNewAnime();
-        loadTopRankedAnime();
+        //loadTopRankedAnime();
+        loadTrendingAnime();
     }
 
     private void loadPopularAnime() {
@@ -131,25 +132,45 @@ public class AnimeFragment extends Fragment {
         });
     }
 
-    private void loadTopRankedAnime() {
-        Call<KitsuResponse<Anime>> topRankedAnimeCall = kitsuService.getTopRankedAnime("ratingRank", 10);
-        topRankedAnimeCall.enqueue(new Callback<KitsuResponse<Anime>>() {
-            @Override
-            public void onResponse(Call<KitsuResponse<Anime>> call, Response<KitsuResponse<Anime>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    topRankedAnimeList.clear(); // Clear the list before adding new data
-                    topRankedAnimeList.addAll(response.body().getData());
-                    topRankedAdapter.notifyDataSetChanged();
-                } else {
-                    Log.d("Retrofit", "Anime search error: " + response.toString());
-
-                }
+//    private void loadTopRankedAnime() {
+//        Call<KitsuResponse<Anime>> topRankedAnimeCall = kitsuService.getTopRankedAnime("ratingRank", 10);
+//        topRankedAnimeCall.enqueue(new Callback<KitsuResponse<Anime>>() {
+//            @Override
+//            public void onResponse(Call<KitsuResponse<Anime>> call, Response<KitsuResponse<Anime>> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    topRankedAnimeList.clear(); // Clear the list before adding new data
+//                    topRankedAnimeList.addAll(response.body().getData());
+//                    topRankedAdapter.notifyDataSetChanged();
+//                } else {
+//                    Log.d("Retrofit", "Anime search error: " + response.toString());
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<KitsuResponse<Anime>> call, Throwable t) {
+//                Log.d("Retrofit", "Anime search error: " + t.getMessage());
+//            }
+//        });
+//    }
+private void loadTrendingAnime() {
+    Call<KitsuResponse<Anime>> trendingAnimeCall = kitsuService.getTrendingAnime(10);
+    trendingAnimeCall.enqueue(new Callback<KitsuResponse<Anime>>() {
+        @Override
+        public void onResponse(Call<KitsuResponse<Anime>> call, Response<KitsuResponse<Anime>> response) {
+            if (response.isSuccessful() && response.body() != null) {
+                topRankedAnimeList.clear(); // Clear the list before adding new data
+                topRankedAnimeList.addAll(response.body().getData());
+                topRankedAdapter.notifyDataSetChanged();
+            } else {
+                Log.d("Retrofit", "Anime search error: " + response.toString());
             }
+        }
 
-            @Override
-            public void onFailure(Call<KitsuResponse<Anime>> call, Throwable t) {
-                Log.d("Retrofit", "Anime search error: " + t.getMessage());
-            }
-        });
-    }
+        @Override
+        public void onFailure(Call<KitsuResponse<Anime>> call, Throwable t) {
+            Log.d("Retrofit", "Anime search error: " + t.getMessage());
+        }
+    });
+}
 }
