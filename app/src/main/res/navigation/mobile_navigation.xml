@@ -16,7 +16,7 @@
         tools:layout="@layout/fragment_music" />
     <fragment
         android:id="@+id/navigation_id"
-        android:name="com.example.anidex.IdFragment"
+        android:name="com.example.anidex.OpenAI.IdFragment"
         android:label="ID"
         tools:layout="@layout/fragment_id" />
     <fragment

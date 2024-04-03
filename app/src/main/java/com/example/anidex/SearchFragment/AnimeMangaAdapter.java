@@ -83,16 +83,16 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
             starIcon.setImageResource(isFavoriteNow ? R.drawable.ic_baseline_star_24 : R.drawable.ic_baseline_star_border_24);
         }
 
-
-        private void updateFavoriteIcon() {
-            // This method should check the favorite status of the current item and update the icon accordingly
-            // Example implementation (You might need to adjust based on your actual data structure)
-            Object item = items.get(getAdapterPosition());
-            String itemId = item instanceof Anime ? ((Anime) item).getId() : ((Manga) item).getId();
-            String type = item instanceof Anime ? "anime" : "manga";
-            boolean isFavorite = favoritesManager.isFavorite(itemId, type);
-            starIcon.setImageResource(isFavorite ? R.drawable.ic_baseline_star_24 : R.drawable.ic_baseline_star_border_24);
-        }
+//
+//        private void updateFavoriteIcon() {
+//            // This method should check the favorite status of the current item and update the icon accordingly
+//            // Example implementation (You might need to adjust based on your actual data structure)
+//            Object item = items.get(getAdapterPosition());
+//            String itemId = item instanceof Anime ? ((Anime) item).getId() : ((Manga) item).getId();
+//            String type = item instanceof Anime ? "anime" : "manga";
+//            boolean isFavorite = favoritesManager.isFavorite(itemId, type);
+//            starIcon.setImageResource(isFavorite ? R.drawable.ic_baseline_star_24 : R.drawable.ic_baseline_star_border_24);
+//        }
 
         public void bindAnime(Anime anime) {
             textName.setText(anime.getAttributes().getCanonicalTitle());
