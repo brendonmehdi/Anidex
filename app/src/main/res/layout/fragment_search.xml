@@ -11,15 +11,15 @@
     tools:context=".SearchFragment.SearchFragment">
 
 
-
     <android.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/searchview_background"
-        android:searchIcon="@drawable/baseline_saved_search_24"
         android:layout_marginTop="0dp"
-        android:paddingTop="0dp" >
+        android:background="@drawable/searchview_background"
+        android:paddingTop="0dp"
+        android:searchHintIcon="@drawable/baseline_saved_search_24"
+        android:searchIcon="@drawable/baseline_saved_search_24">
 
     </android.widget.SearchView>
 
