@@ -1,12 +1,13 @@
 package com.example.anidex.HomeFragment;
 
-import android.support.annotation.NonNull;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anidex.Models.Manga;
@@ -18,9 +19,11 @@ import java.util.List;
 public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MangaViewHolder> {
 
     private List<Manga> mangaList;
+    private Context context;
 
-    public MangaAdapter(List<Manga> mangaList) {
+    public MangaAdapter(List<Manga> mangaList, Context context) {
         this.mangaList = mangaList;
+        this.context = context;
     }
 
     @NonNull

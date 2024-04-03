@@ -1,5 +1,6 @@
 package com.example.anidex.HomeFragment;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +19,11 @@ import java.util.List;
 public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHolder> {
 
     private List<Anime> animeList;
+    private Context context;
 
-    public AnimeAdapter(List<Anime> animeList) {
+    public AnimeAdapter(List<Anime> animeList, Context context) {
         this.animeList = animeList;
+        this.context = context;
     }
 
     @NonNull
