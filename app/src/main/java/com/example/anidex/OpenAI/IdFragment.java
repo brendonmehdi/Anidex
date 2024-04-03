@@ -1,4 +1,4 @@
-package com.example.anidex;
+package com.example.anidex.OpenAI;
 
 import android.net.Uri;
 import android.util.Base64;
@@ -20,6 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.example.anidex.OpenAI.ApiResponse;
 import com.example.anidex.OpenAI.OpenAIApiService;
+import com.example.anidex.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

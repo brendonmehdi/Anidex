@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anidex.Favs.FavoritesManager;
 import com.example.anidex.Models.Anime;
 import com.example.anidex.Models.Manga;
 import com.example.anidex.R;
@@ -21,17 +22,18 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
 
     private List<Object> items;
     private Context context;
+    private FavoritesManager favoritesManager;
 
     public AnimeMangaAdapter(Context context, List<Object> items) {
         this.context = context;
         this.items = items;
+        this.favoritesManager = new FavoritesManager(context); // Ensure FavoritesManager is updated to handle both types
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recyclerview_search_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_search_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -39,11 +41,9 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Object item = items.get(position);
         if (item instanceof Anime) {
-            Anime anime = (Anime) item;
-            holder.bindAnime(anime);
+            holder.bindAnime((Anime) item);
         } else if (item instanceof Manga) {
-            Manga manga = (Manga) item;
-            holder.bindManga(manga);
+            holder.bindManga((Manga) item);
         }
     }
 
@@ -56,46 +56,59 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
         ImageView imageAnime;
         TextView textName;
         TextView textType;
+        ImageView starIcon; // Star icon for marking as favorite
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageAnime = itemView.findViewById(R.id.imageAnime);
             textName = itemView.findViewById(R.id.textName);
             textType = itemView.findViewById(R.id.textType);
+            starIcon = itemView.findViewById(R.id.star_icon);
+
+            starIcon.setOnClickListener(v -> toggleFavorite(getAdapterPosition()));
         }
+
+        private void toggleFavorite(int position) {
+            Object item = items.get(position);
+            String itemId = item instanceof Anime ? ((Anime) item).getId() : ((Manga) item).getId();
+            String type = item instanceof Anime ? "anime" : "manga";
+
+            boolean isFavoriteNow = !favoritesManager.isFavorite(itemId, type);
+            if (isFavoriteNow) {
+                favoritesManager.addFavorite(item, type);
+            } else {
+                favoritesManager.removeFavorite(itemId, type);
+            }
+            // Update icon immediately for better user experience
+            starIcon.setImageResource(isFavoriteNow ? R.drawable.ic_baseline_star_24 : R.drawable.ic_baseline_star_border_24);
+        }
+
 
         public void bindAnime(Anime anime) {
             textName.setText(anime.getAttributes().getCanonicalTitle());
-            textType.setText(anime.getAttributes().getSubType());
-
-            // Load image using Picasso
-            String posterUrl = anime.getAttributes().getPosterImage().getMedium();
-            if (posterUrl != null && !posterUrl.isEmpty()) {
-                Picasso.get()
-                        .load(posterUrl)
-                        .placeholder(R.drawable.noimage) // Placeholder image while loading
-                        .into(imageAnime);
-            } else {
-                // Use placeholder if URL is empty
-                imageAnime.setImageResource(R.drawable.noimage);
-            }
+            textType.setText(anime.getType());
+            updateFavoriteIcon(anime.getId(), "anime");
+            loadImage(anime.getAttributes().getPosterImage().getMedium());
         }
 
         public void bindManga(Manga manga) {
             textName.setText(manga.getAttributes().getCanonicalTitle());
+
             textType.setText(manga.getAttributes().getSubType());
 
-            // Load image using Picasso
-            String posterUrl = manga.getAttributes().getPosterImage().getMedium();
-            if (posterUrl != null && !posterUrl.isEmpty()) {
-                Picasso.get()
-                        .load(posterUrl)
-                        .placeholder(R.drawable.noimage) // Placeholder image while loading
-                        .into(imageAnime);
-            } else {
-                // Use placeholder if URL is empty
-                imageAnime.setImageResource(R.drawable.noimage);
-            }
+            textType.setText(manga.getType());
+            updateFavoriteIcon(manga.getId(), "manga");
+            loadImage(manga.getAttributes().getPosterImage().getMedium());
+        }
+
+
+        private void updateFavoriteIcon(String itemId, String type) {
+            boolean isFavorite = favoritesManager.isFavorite(itemId, type);
+            starIcon.setImageResource(isFavorite ? R.drawable.ic_baseline_star_24 : R.drawable.ic_baseline_star_border_24);
+        }
+
+        private void loadImage(String url) {
+            Picasso.get().load(url).placeholder(R.drawable.noimage).into(imageAnime);
         }
     }
 }

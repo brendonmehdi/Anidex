@@ -12,26 +12,34 @@ public class Anime implements Parcelable {
     private String type;
     private Attributes attributes;
 
+
+//my stuff
+    // Add fields for review and comments
+    private String userReview;
+    private String userComment;
+
+    // Getters and setters for the new fields
+    public String getUserReview() {
+        return userReview;
+    }
+
+    public void setUserReview(String userReview) {
+        this.userReview = userReview;
+    }
+
+    public String getUserComment() {
+        return userComment;
+    }
+
+    public void setUserComment(String userComment) {
+        this.userComment = userComment;
+    }
+
+    //my stuff end
+
+
     public Anime() {
     }
-
-    protected Anime(Parcel in) {
-        id = in.readString();
-        type = in.readString();
-        attributes = in.readParcelable(Attributes.class.getClassLoader());
-    }
-
-    public static final Creator<Anime> CREATOR = new Creator<Anime>() {
-        @Override
-        public Anime createFromParcel(Parcel in) {
-            return new Anime(in);
-        }
-
-        @Override
-        public Anime[] newArray(int size) {
-            return new Anime[size];
-        }
-    };
 
     public String getId() {
         return id;
@@ -66,6 +74,7 @@ public class Anime implements Parcelable {
 
         @SerializedName("subtype")
         private String subType;
+
 
         @SerializedName("popularityRank")
         private int popularityRank;
@@ -124,14 +133,26 @@ public class Anime implements Parcelable {
             this.createdAt = createdAt;
         }
 
+
+        // No-argument constructor
+        public Attributes() {
+        }
+
+        // Existing constructor that accepts a Parcel
+
         protected Attributes(Parcel in) {
             canonicalTitle = in.readString();
             posterImage = in.readParcelable(PosterImage.class.getClassLoader());
             subType = in.readString();
+
             popularityRank = in.readInt();
             ratingRank = in.readInt();
             createdAt = in.readString();
+
         }
+
+        // Existing Parcelable implementation
+        // ...
 
         public static final Creator<Attributes> CREATOR = new Creator<Attributes>() {
             @Override
@@ -159,6 +180,30 @@ public class Anime implements Parcelable {
             dest.writeInt(ratingRank);
             dest.writeString(createdAt);
         }
+
+//        public String getCanonicalTitle() {
+//            return canonicalTitle;
+//        }
+//
+//        public void setCanonicalTitle(String canonicalTitle) {
+//            this.canonicalTitle = canonicalTitle;
+//        }
+//
+//        public PosterImage getPosterImage() {
+//            return posterImage;
+//        }
+//
+//        public void setPosterImage(PosterImage posterImage) {
+//            this.posterImage = posterImage;
+//        }
+//
+//        public String getSubType() {
+//            return subType;
+//        }
+//
+//        public void setSubType(String subType) {
+//            this.subType = subType;
+//        }
     }
 
     public static class PosterImage implements Parcelable {
@@ -250,8 +295,42 @@ public class Anime implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(type);
-        dest.writeParcelable(attributes, flags);
+        dest.writeString(this.id);
+        dest.writeString(this.type);
+        dest.writeParcelable(this.attributes, flags);
+        dest.writeString(this.userReview);
+        dest.writeString(this.userComment);
     }
+
+
+
+
+    public void readFromParcel(Parcel source) {
+        this.id = source.readString();
+        this.type = source.readString();
+        this.attributes = source.readParcelable(Attributes.class.getClassLoader());
+        this.userReview = source.readString();
+        this.userComment = source.readString();
+    }
+
+    protected Anime(Parcel in) {
+        this.id = in.readString();
+        this.type = in.readString();
+        this.attributes = in.readParcelable(Attributes.class.getClassLoader());
+        this.userReview = in.readString();
+        this.userComment = in.readString();
+    }
+
+    public static final Creator<Anime> CREATOR = new Creator<Anime>() {
+        @Override
+        public Anime createFromParcel(Parcel source) {
+            return new Anime(source);
+        }
+
+        @Override
+        public Anime[] newArray(int size) {
+            return new Anime[size];
+        }
+    };
 }
+

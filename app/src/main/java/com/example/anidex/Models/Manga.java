@@ -11,6 +11,25 @@ public class Manga implements Parcelable {
     private String id;
     private String type;
     private Attributes attributes;
+    private String userReview; // New field for user review
+    private String userComment; // New field for user comment
+
+    // Standard getters and setters for the new fields
+    public String getUserReview() {
+        return userReview;
+    }
+
+    public void setUserReview(String userReview) {
+        this.userReview = userReview;
+    }
+
+    public String getUserComment() {
+        return userComment;
+    }
+
+    public void setUserComment(String userComment) {
+        this.userComment = userComment;
+    }
 
     public Manga() {
     }
@@ -19,6 +38,8 @@ public class Manga implements Parcelable {
         id = in.readString();
         type = in.readString();
         attributes = in.readParcelable(Attributes.class.getClassLoader());
+        userReview = in.readString(); // Read user review from parcel
+        userComment = in.readString(); // Read user comment from parcel
     }
 
     public static final Creator<Manga> CREATOR = new Creator<Manga>() {
@@ -92,6 +113,7 @@ public class Manga implements Parcelable {
             this.posterImage = posterImage;
         }
 
+
         public String getSubType() {
             return subType;
         }
@@ -145,6 +167,7 @@ public class Manga implements Parcelable {
             }
         };
 
+
         @Override
         public int describeContents() {
             return 0;
@@ -152,13 +175,43 @@ public class Manga implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
+
             dest.writeString(canonicalTitle);
             dest.writeParcelable(posterImage, flags);
             dest.writeString(subType);
             dest.writeInt(popularityRank);
             dest.writeInt(ratingRank);
             dest.writeString(createdAt);
+
+            dest.writeString(this.canonicalTitle);
+            dest.writeParcelable(this.posterImage, flags);
+
         }
+
+        public void readFromParcel(Parcel source) {
+            this.canonicalTitle = source.readString();
+            this.posterImage = source.readParcelable(PosterImage.class.getClassLoader());
+        }
+
+        public Attributes() {
+        }
+
+//        protected Attributes(Parcel in) {
+//            this.canonicalTitle = in.readString();
+//            this.posterImage = in.readParcelable(PosterImage.class.getClassLoader());
+//        }
+
+//        public static final Creator<Attributes> CREATOR = new Creator<Attributes>() {
+//            @Override
+//            public Attributes createFromParcel(Parcel source) {
+//                return new Attributes(source);
+//            }
+//
+//            @Override
+//            public Attributes[] newArray(int size) {
+//                return new Attributes[size];
+//            }
+//        };
     }
 
     public static class PosterImage implements Parcelable {

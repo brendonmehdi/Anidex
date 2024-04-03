@@ -16,12 +16,12 @@
         tools:layout="@layout/fragment_music" />
     <fragment
         android:id="@+id/navigation_id"
-        android:name="com.example.anidex.IdFragment"
+        android:name="com.example.anidex.OpenAI.IdFragment"
         android:label="ID"
         tools:layout="@layout/fragment_id" />
     <fragment
         android:id="@+id/navigation_fav"
-        android:name="com.example.anidex.FavFragment"
+        android:name="com.example.anidex.Favs.FavFragment"
         android:label="Favourites"
         tools:layout="@layout/fragment_fav" />
     <fragment
