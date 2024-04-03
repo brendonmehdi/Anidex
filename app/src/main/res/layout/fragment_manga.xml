@@ -1,58 +1,76 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFBA68"
-    android:orientation="vertical">
+    android:background="#FFBA68">
 
-    <TextView
-        android:id="@+id/textViewPopularManga"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Popular Manga"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewPopularManga"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFBA68"
-        android:clipToPadding="false"
-        android:padding="8dp" />
+        <TextView
+            android:id="@+id/textViewPopularManga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Popular Manga"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textViewNewManga"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="New Manga"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPopularManga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFBA68"
+            android:clipToPadding="false"
+            android:padding="8dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewNewManga"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFBA68"
-        android:clipToPadding="false"
-        android:padding="8dp" />
+        <TextView
+            android:id="@+id/textViewNewManga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="New Manga"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textViewTopRankedManga"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Trending Manga"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewNewManga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFBA68"
+            android:clipToPadding="false"
+            android:padding="8dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewTopRankedManga"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFBA68"
-        android:clipToPadding="false"
-        android:padding="8dp" />
+        <TextView
+            android:id="@+id/textViewTopRankedManga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Top Ranked Manga"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewTopRankedManga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFBA68"
+            android:clipToPadding="false"
+            android:padding="8dp" />
+        <TextView
+            android:id="@+id/textViewTrendingManga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Trending Manga"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerviewTrendingManga"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</ScrollView>

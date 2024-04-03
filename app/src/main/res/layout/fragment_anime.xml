@@ -1,59 +1,77 @@
-<!-- fragment_anime.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFBA68"
-    android:orientation="vertical">
+    android:background="#FFBA68">
 
-    <TextView
-        android:id="@+id/textViewPopularAnime"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Popular Anime"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewPopularAnime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFBA68"
-        android:clipToPadding="false"
-        android:padding="8dp" />
+        <TextView
+            android:id="@+id/textViewPopularAnime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Popular Anime"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textViewNewAnime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="New Anime"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPopularAnime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFBA68"
+            android:clipToPadding="false"
+            android:padding="8dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewNewAnime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFBA68"
-        android:clipToPadding="false"
-        android:padding="8dp" />
+        <TextView
+            android:id="@+id/textViewNewAnime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="New Anime"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textViewTopRankedAnime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="Trending Anime"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewNewAnime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFBA68"
+            android:clipToPadding="false"
+            android:padding="8dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewTopRankedAnime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFBA68"
-        android:clipToPadding="false"
-        android:padding="8dp" />
+        <TextView
+            android:id="@+id/textViewTopRankedAnime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Top Ranked Anime"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewTopRankedAnime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFBA68"
+            android:clipToPadding="false"
+            android:padding="8dp" />
+
+        <TextView
+            android:id="@+id/textViewTrending"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Trending Anime"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerviewTrending"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</ScrollView>
