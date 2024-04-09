@@ -9,6 +9,9 @@
         android:id="@+id/navigation_id"
         android:icon="@drawable/ic_baseline_face_24"
         android:title="@string/title_id" />
+    <item
+        android:id="@+id/navigation_music"
+        android:title="" />
 
     <item
         android:id="@+id/navigation_fav"
