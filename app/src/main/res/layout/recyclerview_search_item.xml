@@ -5,7 +5,9 @@
     android:background="@drawable/search_card"
     android:orientation="vertical"
     android:padding="8dp"
-    android:layout_margin="4dp">>
+    android:layout_margin="4dp"><![CDATA[>
+
+    ]]>
 
     <ImageView
         android:id="@+id/imageAnime"
