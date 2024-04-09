@@ -1,7 +1,7 @@
 package com.example.anidex.HomeFragment;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +10,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anidex.AnimeDetailFragment;
 import com.example.anidex.Models.Anime;
 import com.example.anidex.R;
 import com.squareup.picasso.Picasso;
@@ -28,15 +34,14 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
         this.context = context;
     }
 
-    @NonNull
     @Override
-    public AnimeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AnimeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_item, parent, false);
         return new AnimeViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AnimeViewHolder holder, int position) {
+    public void onBindViewHolder(AnimeViewHolder holder, int position) {
         Anime anime = animeList.get(position);
         holder.bind(anime);
 
@@ -49,24 +54,42 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
         return animeList.size();
     }
 
-    public static class AnimeViewHolder extends RecyclerView.ViewHolder {
+    public class AnimeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView imageView;
         private TextView titleTextView;
         private TextView subtypeTextView;
 
-        public AnimeViewHolder(@NonNull View itemView) {
+        public AnimeViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.homeImage);
             titleTextView = itemView.findViewById(R.id.homeName);
             subtypeTextView = itemView.findViewById(R.id.homeType);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Anime anime) {
             titleTextView.setText(anime.getAttributes().getCanonicalTitle());
             subtypeTextView.setText(anime.getAttributes().getSubType());
-
             Picasso.get().load(anime.getAttributes().getPosterImage().getMedium()).into(imageView);
         }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Anime clickedAnime = animeList.get(position);
+
+                NavController navController = Navigation.findNavController(view);
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("anime", clickedAnime);
+                navController.navigate(R.id.action_navigation_home_to_animeDetailFragment, bundle);
+            }
+        }
+
+
+
+
     }
 }

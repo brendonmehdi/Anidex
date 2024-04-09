@@ -8,7 +8,11 @@
         android:id="@+id/navigation_home"
         android:name="com.example.anidex.HomeFragment.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_animeDetailFragment"
+            app:destination="@id/animeDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_music"
         android:name="com.example.anidex.Music.MusicFragment"
@@ -42,4 +46,8 @@
         android:name="com.example.anidex.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/animeDetailFragment"
+        android:name="com.example.anidex.AnimeDetailFragment"
+        android:label="AnimeDetailFragment" />
 </navigation>
