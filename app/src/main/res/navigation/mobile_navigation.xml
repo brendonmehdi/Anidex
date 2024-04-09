@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_navigation_home_to_animeDetailFragment"
             app:destination="@id/animeDetailFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_mangaDetailFragment"
+            app:destination="@id/mangaDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_music"
@@ -50,4 +53,8 @@
         android:id="@+id/animeDetailFragment"
         android:name="com.example.anidex.AnimeDetailFragment"
         android:label="AnimeDetailFragment" />
+    <fragment
+        android:id="@+id/mangaDetailFragment"
+        android:name="com.example.anidex.MangaDetailFragment"
+        android:label="MangaDetailFragment" />
 </navigation>

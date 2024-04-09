@@ -75,7 +75,6 @@ public class Anime implements Parcelable {
         @SerializedName("subtype")
         private String subType;
 
-
         @SerializedName("popularityRank")
         private int popularityRank;
 
@@ -84,6 +83,25 @@ public class Anime implements Parcelable {
 
         @SerializedName("createdAt")
         private String createdAt;
+
+        // New attributes
+        @SerializedName("synopsis")
+        private String synopsis;
+
+        @SerializedName("averageRating")
+        private String averageRating;
+
+        @SerializedName("startDate")
+        private String startDate;
+
+        @SerializedName("endDate")
+        private String endDate;
+
+        @SerializedName("episodeCount")
+        private int episodeCount;
+
+        @SerializedName("episodeLength")
+        private int episodeLength;
 
         public String getCanonicalTitle() {
             return canonicalTitle;
@@ -133,26 +151,73 @@ public class Anime implements Parcelable {
             this.createdAt = createdAt;
         }
 
+        // Getters and setters for the new attributes
+        public String getSynopsis() {
+            return synopsis;
+        }
+
+        public void setSynopsis(String synopsis) {
+            this.synopsis = synopsis;
+        }
+
+        public String getAverageRating() {
+            return averageRating;
+        }
+
+        public void setAverageRating(String averageRating) {
+            this.averageRating = averageRating;
+        }
+
+        public String getStartDate() {
+            return startDate;
+        }
+
+        public void setStartDate(String startDate) {
+            this.startDate = startDate;
+        }
+
+        public String getEndDate() {
+            return endDate;
+        }
+
+        public void setEndDate(String endDate) {
+            this.endDate = endDate;
+        }
+
+        public int getEpisodeCount() {
+            return episodeCount;
+        }
+
+        public void setEpisodeCount(int episodeCount) {
+            this.episodeCount = episodeCount;
+        }
+
+        public int getEpisodeLength() {
+            return episodeLength;
+        }
+
+        public void setEpisodeLength(int episodeLength) {
+            this.episodeLength = episodeLength;
+        }
 
         // No-argument constructor
         public Attributes() {
         }
 
-        // Existing constructor that accepts a Parcel
-
         protected Attributes(Parcel in) {
             canonicalTitle = in.readString();
             posterImage = in.readParcelable(PosterImage.class.getClassLoader());
             subType = in.readString();
-
             popularityRank = in.readInt();
             ratingRank = in.readInt();
             createdAt = in.readString();
-
+            synopsis = in.readString();
+            averageRating = in.readString();
+            startDate = in.readString();
+            endDate = in.readString();
+            episodeCount = in.readInt();
+            episodeLength = in.readInt();
         }
-
-        // Existing Parcelable implementation
-        // ...
 
         public static final Creator<Attributes> CREATOR = new Creator<Attributes>() {
             @Override
@@ -179,32 +244,15 @@ public class Anime implements Parcelable {
             dest.writeInt(popularityRank);
             dest.writeInt(ratingRank);
             dest.writeString(createdAt);
+            dest.writeString(synopsis);
+            dest.writeString(averageRating);
+            dest.writeString(startDate);
+            dest.writeString(endDate);
+            dest.writeInt(episodeCount);
+            dest.writeInt(episodeLength);
         }
-
-//        public String getCanonicalTitle() {
-//            return canonicalTitle;
-//        }
-//
-//        public void setCanonicalTitle(String canonicalTitle) {
-//            this.canonicalTitle = canonicalTitle;
-//        }
-//
-//        public PosterImage getPosterImage() {
-//            return posterImage;
-//        }
-//
-//        public void setPosterImage(PosterImage posterImage) {
-//            this.posterImage = posterImage;
-//        }
-//
-//        public String getSubType() {
-//            return subType;
-//        }
-//
-//        public void setSubType(String subType) {
-//            this.subType = subType;
-//        }
     }
+
 
     public static class PosterImage implements Parcelable {
         private String tiny;

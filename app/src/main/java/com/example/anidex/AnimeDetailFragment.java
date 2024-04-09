@@ -54,11 +54,28 @@ public class AnimeDetailFragment extends Fragment {
         ImageView imageViewAnime = view.findViewById(R.id.imageViewAnime);
         TextView textViewTitle = view.findViewById(R.id.textViewTitle);
         TextView textViewSubtype = view.findViewById(R.id.textViewSubtype);
+        TextView textViewSynopsis = view.findViewById(R.id.textViewSynopsis);
+        TextView textViewAverageRating = view.findViewById(R.id.textViewAverageRating);
+        TextView textViewStartDate = view.findViewById(R.id.textViewStartDate);
+        TextView textViewEndDate = view.findViewById(R.id.textViewEndDate);
+        TextView textViewEpisodeCount = view.findViewById(R.id.textViewEpisodeCount);
+        TextView textViewEpisodeLength = view.findViewById(R.id.textViewEpisodeLength);
 
-        if (anime != null) {
-            Picasso.get().load(anime.getAttributes().getPosterImage().getMedium()).into(imageViewAnime);
-            textViewTitle.setText(anime.getAttributes().getCanonicalTitle());
-            textViewSubtype.setText(anime.getAttributes().getSubType());
+        Bundle arguments = getArguments();
+        if (arguments != null && arguments.containsKey("anime")) {
+            Anime anime = arguments.getParcelable("anime");
+            if (anime != null) {
+                Picasso.get().load(anime.getAttributes().getPosterImage().getMedium()).into(imageViewAnime);
+                textViewTitle.setText(anime.getAttributes().getCanonicalTitle());
+                textViewSubtype.setText(anime.getAttributes().getSubType());
+                textViewSynopsis.setText(anime.getAttributes().getSynopsis());
+                textViewAverageRating.setText("Average Rating:"+anime.getAttributes().getAverageRating());
+                textViewStartDate.setText("Start Date:"+anime.getAttributes().getStartDate());
+                textViewEndDate.setText("Start Date:"+anime.getAttributes().getEndDate());
+                textViewEpisodeCount.setText("Episode Count:"+String.valueOf(anime.getAttributes().getEpisodeCount()));
+                textViewEpisodeLength.setText("Episode Length:"+String.valueOf(anime.getAttributes().getEpisodeLength()));
+            }
         }
     }
+
 }
