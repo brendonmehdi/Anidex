@@ -30,9 +30,19 @@ public class MusicFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_music, container, false);
-        SearchView searchView = view.findViewById(R.id.searchView);
+
         RecyclerView rvAnimeThemes = view.findViewById(R.id.rvAnimeThemes);
+//        List<AnimeTheme> allThemes = new ArrayList<>();
+//        AnimeThemesAdapter adapter = new AnimeThemesAdapter(getContext(), allThemes);
+//        rvAnimeThemes.setAdapter(adapter);
+
+
+
+        SearchView searchView = view.findViewById(R.id.searchView);
+
         rvAnimeThemes.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
 
 
         progressBar = view.findViewById(R.id.progressBarAnime);

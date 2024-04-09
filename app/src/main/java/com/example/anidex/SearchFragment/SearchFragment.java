@@ -76,6 +76,9 @@ public class SearchFragment extends Fragment {
                     //makes the progress the bar visible
                     progressBar.setVisibility(View.VISIBLE);
 
+                    //resets the recycler animation
+                    adapter.resetAnimations();
+
                     // Hide the keyboard on search
                     View view = getActivity().getCurrentFocus();
                     if (view != null) {

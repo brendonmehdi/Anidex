@@ -75,6 +75,8 @@ public class AnimeFragment extends Fragment {
         topRankedRecyclerView = view.findViewById(R.id.recyclerViewTopRankedAnime);
         trendingRecyclerview=view.findViewById(R.id.recyclerviewTrending);
 
+
+
         // Initialize adapters
         popularAdapter = new AnimeAdapter(popularAnimeList, getContext());
         newAdapter = new AnimeAdapter(newAnimeList, getContext());

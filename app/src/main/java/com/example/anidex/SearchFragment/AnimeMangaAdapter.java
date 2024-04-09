@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,13 +18,21 @@ import com.example.anidex.Models.Manga;
 import com.example.anidex.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.ViewHolder> {
-
+    //made it so the animations isnt clunky and only runs when once when the item is visible not each time when it loads all items
+    private Set<Integer> animatedItems = new HashSet<>();
     private List<Object> items;
     private Context context;
     private FavoritesManager favoritesManager;
+
+    //used to reset the saved animations for the next search
+    public void resetAnimations() {
+        animatedItems.clear();
+    }
 
     public AnimeMangaAdapter(Context context, List<Object> items) {
         this.context = context;
@@ -44,6 +54,12 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
             holder.bindAnime((Anime) item);
         } else if (item instanceof Manga) {
             holder.bindManga((Manga) item);
+        }
+
+        if (!animatedItems.contains(position)) {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_from_right);
+            holder.itemView.startAnimation(animation);
+            animatedItems.add(position); // Remembers that this position has been animated
         }
     }
 
@@ -89,6 +105,7 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
             textType.setText(anime.getType());
             updateFavoriteIcon(anime.getId(), "anime");
             loadImage(anime.getAttributes().getPosterImage().getMedium());
+
         }
 
         public void bindManga(Manga manga) {
