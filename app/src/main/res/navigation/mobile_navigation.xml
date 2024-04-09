@@ -27,14 +27,14 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.anidex.SearchFragment.SearchFragment"
-        android:label="fragment_search"
+        android:label="Search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/animeFragment"
         android:name="com.example.anidex.HomeFragment.AnimeFragment"
-        android:label="AnimeFragment" />
+        android:label="Anime" />
     <fragment
         android:id="@+id/mangaFragment"
         android:name="com.example.anidex.HomeFragment.MangaFragment"
-        android:label="MangaFragment" />
+        android:label="Manga" />
 </navigation>
