@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +39,9 @@ public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MangaViewHol
     public void onBindViewHolder(@NonNull MangaViewHolder holder, int position) {
         Manga manga = mangaList.get(position);
         holder.bind(manga);
+
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_from_right);
+        holder.itemView.startAnimation(animation);
     }
 
     @Override

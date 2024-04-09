@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +39,9 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
     public void onBindViewHolder(@NonNull AnimeViewHolder holder, int position) {
         Anime anime = animeList.get(position);
         holder.bind(anime);
+
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_from_right);
+        holder.itemView.startAnimation(animation);
     }
 
     @Override
