@@ -65,7 +65,7 @@ public class AnimeDetailFragment extends Fragment {
         if (arguments != null && arguments.containsKey("anime")) {
             Anime anime = arguments.getParcelable("anime");
             if (anime != null) {
-                Picasso.get().load(anime.getAttributes().getPosterImage().getMedium()).into(imageViewAnime);
+                Picasso.get().load(anime.getAttributes().getPosterImage().getLarge()).into(imageViewAnime);
                 textViewTitle.setText(anime.getAttributes().getCanonicalTitle());
                 textViewSubtype.setText(anime.getAttributes().getSubType());
                 textViewSynopsis.setText(anime.getAttributes().getSynopsis());

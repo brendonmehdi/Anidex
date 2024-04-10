@@ -71,7 +71,7 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
         public void bind(Anime anime) {
             titleTextView.setText(anime.getAttributes().getCanonicalTitle());
             subtypeTextView.setText(anime.getAttributes().getSubType());
-            Picasso.get().load(anime.getAttributes().getPosterImage().getMedium()).into(imageView);
+            Picasso.get().load(anime.getAttributes().getPosterImage().getLarge()).into(imageView);
         }
 
         @Override

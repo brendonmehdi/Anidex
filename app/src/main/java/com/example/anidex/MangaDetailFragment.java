@@ -61,7 +61,7 @@ public class MangaDetailFragment extends Fragment {
         TextView textViewVolumeCount = view.findViewById(R.id.textViewVolumeCount);
 
         if (manga != null) {
-            Picasso.get().load(manga.getAttributes().getPosterImage().getMedium()).into(imageViewManga);
+            Picasso.get().load(manga.getAttributes().getPosterImage().getLarge()).into(imageViewManga);
             textViewTitle.setText(manga.getAttributes().getCanonicalTitle());
             textViewSubtype.setText(manga.getAttributes().getSubType());
             textViewSynopsis.setText(manga.getAttributes().getSynopsis());
