@@ -105,7 +105,7 @@ public class MangaFragment extends Fragment {
     }
 
     private void loadPopularManga() {
-        Call<KitsuResponse<Manga>> popularMangaCall = kitsuService.getPopularManga("popularityRank", 10);
+        Call<KitsuResponse<Manga>> popularMangaCall = kitsuService.getPopularManga("popularityRank", 20);
         popularMangaCall.enqueue(new Callback<KitsuResponse<Manga>>() {
             @Override
             public void onResponse(Call<KitsuResponse<Manga>> call, Response<KitsuResponse<Manga>> response) {
@@ -126,7 +126,7 @@ public class MangaFragment extends Fragment {
     }
 
     private void loadNewManga() {
-        Call<KitsuResponse<Manga>> newMangaCall = kitsuService.getNewManga("-createdAt", 10);
+        Call<KitsuResponse<Manga>> newMangaCall = kitsuService.getNewManga("-createdAt", 20);
         newMangaCall.enqueue(new Callback<KitsuResponse<Manga>>() {
             @Override
             public void onResponse(Call<KitsuResponse<Manga>> call, Response<KitsuResponse<Manga>> response) {
@@ -147,7 +147,7 @@ public class MangaFragment extends Fragment {
     }
 
     private void loadTopRankedManga() {
-        Call<KitsuResponse<Manga>> topRankedMangaCall = kitsuService.getTopRankedManga("ratingRank", 10);
+        Call<KitsuResponse<Manga>> topRankedMangaCall = kitsuService.getTopRankedManga("ratingRank", 20);
         topRankedMangaCall.enqueue(new Callback<KitsuResponse<Manga>>() {
             @Override
             public void onResponse(Call<KitsuResponse<Manga>> call, Response<KitsuResponse<Manga>> response) {
@@ -168,7 +168,7 @@ public class MangaFragment extends Fragment {
     }
 
     private void loadTrendingManga() {
-        Call<KitsuResponse<Manga>> trendingMangaCall = kitsuService.getTrendingManga(10);
+        Call<KitsuResponse<Manga>> trendingMangaCall = kitsuService.getTrendingManga(20);
         trendingMangaCall.enqueue(new Callback<KitsuResponse<Manga>>() {
             @Override
             public void onResponse(Call<KitsuResponse<Manga>> call, Response<KitsuResponse<Manga>> response) {

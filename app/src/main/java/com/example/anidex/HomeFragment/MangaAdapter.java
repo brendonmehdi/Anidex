@@ -1,6 +1,9 @@
 package com.example.anidex.HomeFragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anidex.Models.Anime;
 import com.example.anidex.Models.Manga;
 import com.example.anidex.R;
 import com.squareup.picasso.Picasso;
@@ -49,7 +55,7 @@ public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MangaViewHol
         return mangaList.size();
     }
 
-    public static class MangaViewHolder extends RecyclerView.ViewHolder {
+    public class MangaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
 
         private ImageView imageView;
         private TextView titleTextView;
@@ -60,15 +66,46 @@ public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MangaViewHol
             imageView = itemView.findViewById(R.id.homeImage);
             titleTextView = itemView.findViewById(R.id.homeName);
             subtypeTextView = itemView.findViewById(R.id.homeType);
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         public void bind(Manga manga) {
             // Set data to views
             titleTextView.setText(manga.getAttributes().getCanonicalTitle());
             subtypeTextView.setText(manga.getAttributes().getSubType());
+            Picasso.get().load(manga.getAttributes().getPosterImage().getLarge()).into(imageView);
+        }
 
-            // Load image using Picasso
-            Picasso.get().load(manga.getAttributes().getPosterImage().getMedium()).into(imageView);
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Manga clickedManga = mangaList.get(position);
+
+                NavController navController = Navigation.findNavController(view);
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("manga", clickedManga);
+                navController.navigate(R.id.action_navigation_home_to_mangaDetailFragment, bundle);
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Manga clickedManga = mangaList.get(position);
+                String searchQuery = clickedManga.getAttributes().getCanonicalTitle();
+
+                if (!searchQuery.isEmpty()) {
+                    String searchUrl = "https://www.crunchyroll.com/search?q=" + searchQuery;
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchUrl));
+                    context.startActivity(intent);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
