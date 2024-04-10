@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
 
     private ActivityMainBinding binding;
+    public int fabCount=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +52,15 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
 
+
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "Tap to search or long press for music search", Snackbar.LENGTH_SHORT).show();
+                if(fabCount==0){
+                    Snackbar.make(v, "Tap to search or long press for music search", Snackbar.LENGTH_SHORT).show();
+                    fabCount++;
+                }
+
 
                 navController.navigate(R.id.searchFragment);
             }
