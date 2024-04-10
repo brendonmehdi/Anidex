@@ -52,16 +52,20 @@ public class FavoritesManager {
             Log.e("FavoritesManager", "Anime is null in updateFavoriteAnime method.");
             return;
         }
-        dbHelper.updateFavoriteAnime(anime);
+
+        dbHelper.updateFavorite(anime.getId(), "anime", anime.getUserComment());
     }
 
+    // Method to update a favorite manga, including its comment
     public void updateFavoriteManga(Manga manga) {
         if (manga == null) {
             Log.e("FavoritesManager", "Manga is null in updateFavoriteManga method.");
             return;
         }
-        dbHelper.updateFavoriteManga(manga);
+
+        dbHelper.updateFavorite(manga.getId(), "manga", manga.getUserComment());
     }
+
 
     public List<Object> getAllFavorites(String type) {
         return dbHelper.getAllFavorites(type);

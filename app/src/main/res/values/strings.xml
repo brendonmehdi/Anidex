@@ -12,4 +12,37 @@
     <string name="upload_button_label">Upload Button</string>
     <string name="image_view_description">Image Desc</string>
     <string name="fab_button">Fab button</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+
+    <string name="general_settings_header">General</string>
+    <string name="dark_mode_title">Dark Mode</string>
+    <string name="dark_mode_summary_on">Enabled</string>
+    <string name="dark_mode_summary_off">Disabled</string>
+    <string name="theme_preference_title">Theme Preference</string>
+    <string name="notifications_header">Notifications</string>
+    <string name="notifications_new_content_title">New Content Alerts</string>
+    <string name="notifications_new_content_summary_on">Enabled</string>
+    <string name="notifications_new_content_summary_off">Disabled</string>
+    <string name="notification_timing_title">Notification Timing</string>
+    <string name="data_usage_header">Data Usage</string>
+    <string name="wifi_only_sync_title">Sync Over Wi-Fi Only</string>
+    <string name="wifi_only_sync_summary_on">Enabled</string>
+    <string name="wifi_only_sync_summary_off">Disabled</string>
+    <string name="max_download_size_title">Max Download Size (MB)</string>
+    <string name="max_download_size_dialog_title">Enter max download size in MB</string>
+
 </resources>

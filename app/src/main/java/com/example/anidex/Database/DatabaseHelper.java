@@ -57,9 +57,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_EXTERNAL_ID, externalId);
         values.put(COLUMN_TITLE, title);
         values.put(COLUMN_TYPE, type);
-        values.put(COLUMN_COMMENT, comment); // Ensure you're capturing comments correctly.
+        values.put(COLUMN_COMMENT, comment);
 
-        // Use insert with conflict resolution to avoid duplicate entries
+        // insert with conflict resolution to avoid duplicate entries
         long result = db.insertWithOnConflict(TABLE_FAVORITES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         if (result == -1) {
             Log.e("DatabaseHelper", "Failed to insert manga into favorites.");
@@ -71,44 +71,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<Object> getAllFavorites(String type) {
         List<Object> favoritesList = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase(); // Use getReadableDatabase for data fetching
         Cursor cursor = db.query(TABLE_FAVORITES, null, COLUMN_TYPE + "=?", new String[]{type}, null, null, null);
 
-        int externalIdIndex = cursor.getColumnIndex(COLUMN_EXTERNAL_ID);
-        int titleIndex = cursor.getColumnIndex(COLUMN_TITLE);
+        while (cursor.moveToNext()) {
+            String externalId = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EXTERNAL_ID));
+            String title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE));
+            String comment = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COMMENT)); // Ensure we are fetching the comment
 
-        // Verify that both indexes are valid
-        if (externalIdIndex != -1 && titleIndex != -1) {
-            if (cursor.moveToFirst()) {
-                do {
-                    String externalId = cursor.getString(externalIdIndex);
-                    String title = cursor.getString(titleIndex);
-
-                    if ("anime".equals(type)) {
-                        Anime anime = new Anime();
-                        anime.setId(externalId);
-                        Anime.Attributes attributes = new Anime.Attributes();
-                        attributes.setCanonicalTitle(title);
-                        anime.setAttributes(attributes);
-                        favoritesList.add(anime);
-                    } else if ("manga".equals(type)) {
-                        Manga manga = new Manga();
-                        manga.setId(externalId);
-                        Manga.Attributes attributes = new Manga.Attributes();
-                        attributes.setCanonicalTitle(title);
-                        manga.setAttributes(attributes);
-                        favoritesList.add(manga);
-                    }
-                } while (cursor.moveToNext());
+            if ("anime".equals(type)) {
+                Anime anime = new Anime();
+                anime.setId(externalId);
+                Anime.Attributes attributes = new Anime.Attributes();
+                attributes.setCanonicalTitle(title);
+                anime.setAttributes(attributes);
+                anime.setUserComment(comment); // Set the comment here
+                favoritesList.add(anime);
+            } else if ("manga".equals(type)) {
+                Manga manga = new Manga();
+                manga.setId(externalId);
+                Manga.Attributes attributes = new Manga.Attributes();
+                attributes.setCanonicalTitle(title);
+                manga.setAttributes(attributes);
+                manga.setUserComment(comment); // Set the comment here
+                favoritesList.add(manga);
             }
-        } else {
-            // Handle the case where the columns were not found
-            Log.e("DatabaseHelper", "Required columns not found when fetching favorites.");
         }
         cursor.close();
         db.close();
         return favoritesList;
     }
+
 
 
     public void deleteFavorite(String externalId, String type) {
@@ -117,28 +110,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Updates an anime in the database
-    public void updateFavoriteAnime(Anime anime) {
+
+
+    public void updateFavorite(String externalId, String type, String comment) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_TITLE, anime.getAttributes().getCanonicalTitle());
-        values.put(COLUMN_COMMENT, anime.getUserComment());
-        // Add more fields to update as needed
+        values.put(DatabaseHelper.COLUMN_COMMENT, comment);
 
-        db.update(TABLE_FAVORITES, values, COLUMN_ID + " = ? AND " + COLUMN_TYPE + " = ?", new String[]{anime.getId(), "anime"});
+        // Updating row
+        int update = db.update(DatabaseHelper.TABLE_FAVORITES, values,
+                DatabaseHelper.COLUMN_EXTERNAL_ID + "=? AND " +
+                        DatabaseHelper.COLUMN_TYPE + "=?",
+                new String[]{externalId, type});
+        if (update > 0) {
+            Log.d("DatabaseHelper", "Successfully updated comment for " + type + " with ID: " + externalId);
+        } else {
+            Log.e("DatabaseHelper", "Failed to update comment for " + type + " with ID: " + externalId);
+        }
         db.close();
     }
 
-    // Updates a manga in the database
-    public void updateFavoriteManga(Manga manga) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_TITLE, manga.getAttributes().getCanonicalTitle());
-        values.put(COLUMN_COMMENT, manga.getUserComment());
-        // Add more fields to update as needed
-
-        db.update(TABLE_FAVORITES, values, COLUMN_ID + " = ? AND " + COLUMN_TYPE + " = ?", new String[]{manga.getId(), "manga"});
-        db.close();
-    }
 
 }

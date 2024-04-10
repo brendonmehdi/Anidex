@@ -49,14 +49,13 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
             Anime anime = (Anime) item;
             holder.bind(anime.getAttributes().getCanonicalTitle(), anime.getUserComment());
 
-            Log.d("AnimeBind", "Binding anime: " + anime.getAttributes().getCanonicalTitle());
+//            Log.d("AnimeBind", "Binding anime: " + anime.getUserComment());
         }
         if (item instanceof Manga) {
             Manga manga = (Manga) item;
             holder.bind(manga.getAttributes().getCanonicalTitle(), manga.getUserComment());
-            // Ensure you're setting the manga data correctly
-            // Log here to confirm manga data is reaching this point
-            Log.d("MangaBind", "Binding manga: " + manga.getAttributes().getCanonicalTitle());
+
+//            Log.d("MangaBind", "Binding manga: " + manga.getUserComment());
         }
 
         holder.removeButton.setOnClickListener(v -> {
@@ -108,6 +107,9 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
+
 
     private void showCommentDialog(Object item, int position, TextView commentTextView) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

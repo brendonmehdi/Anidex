@@ -9,9 +9,12 @@
     <color name="white">#FFFFFFFF</color>
 
 
-    <color name="primary">#FFFEFEFE</color> <!-- Off-White -->
-    <color name="secondary">#FFFCFCFC</color> <!-- Light Gray -->
-    <color name="accent">#FFFE3F53</color> <!-- Red -->
-    <color name="text_light">#FF000000</color> <!-- Black -->
-    <color name="text_dark">#FFFFFFFF</color> <!-- White -->
+    <color name="colorPrimary">#FF9900</color>
+    <color name="colorPrimaryVariant">#FFB86B</color>
+    <color name="colorOnPrimary">@android:color/white</color>
+    <color name="colorSecondary">#FF9900</color>
+    <color name="colorSecondaryVariant">#FFED43</color>
+    <color name="colorOnSecondary">@android:color/black</color>
+    <color name="editTextColor">#808080</color>
+
 </resources>

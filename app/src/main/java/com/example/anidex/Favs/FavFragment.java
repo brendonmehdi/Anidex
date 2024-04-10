@@ -29,8 +29,8 @@ public class FavFragment extends Fragment {
         recyclerView = view.findViewById(R.id.favoritesRecyclerView);
 
         db = new DatabaseHelper(getContext());
-        // Adjust this line to use the generalized method, if you have such in FavoritesManager
-        favoriteAnimes = db.getAllFavorites("anime"); // Assuming this method now exists and returns List<Anime>
+
+        favoriteAnimes = db.getAllFavorites("anime");
         adapter = new FavoritesAdapter(favoriteAnimes, getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -45,11 +45,11 @@ public class FavFragment extends Fragment {
         favoriteAnimes.clear();
         favoriteAnimes.addAll(animeFavorites);
         favoriteAnimes.addAll(mangaFavorites);
-        adapter.notifyDataSetChanged(); // Ensure your adapter handles notifyDataSetChanged correctly.
+        adapter.notifyDataSetChanged();
     }
 
     private void refreshFavorites() {
-        favoriteAnimes = db.getAllFavorites("anime"); // Adjust as necessary for your implementation
+        favoriteAnimes = db.getAllFavorites("anime");
         adapter = new FavoritesAdapter(favoriteAnimes, getContext());
         recyclerView.setAdapter(adapter);
     }
