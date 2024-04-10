@@ -104,7 +104,7 @@ public class AnimeFragment extends Fragment {
     }
 
     private void loadPopularAnime() {
-        Call<KitsuResponse<Anime>> popularAnimeCall = kitsuService.getPopularAnime("popularityRank", 10);
+        Call<KitsuResponse<Anime>> popularAnimeCall = kitsuService.getPopularAnime("popularityRank", 20);
         popularAnimeCall.enqueue(new Callback<KitsuResponse<Anime>>() {
             @Override
             public void onResponse(Call<KitsuResponse<Anime>> call, Response<KitsuResponse<Anime>> response) {
@@ -125,7 +125,7 @@ public class AnimeFragment extends Fragment {
     }
 
     private void loadNewAnime() {
-        Call<KitsuResponse<Anime>> newAnimeCall = kitsuService.getNewAnime("-createdAt", 10);
+        Call<KitsuResponse<Anime>> newAnimeCall = kitsuService.getNewAnime("-createdAt", 20);
         newAnimeCall.enqueue(new Callback<KitsuResponse<Anime>>() {
             @Override
             public void onResponse(Call<KitsuResponse<Anime>> call, Response<KitsuResponse<Anime>> response) {
@@ -146,7 +146,7 @@ public class AnimeFragment extends Fragment {
     }
 
     private void loadTopRankedAnime() {
-        Call<KitsuResponse<Anime>> topRankedAnimeCall = kitsuService.getTopRankedAnime("ratingRank", 10);
+        Call<KitsuResponse<Anime>> topRankedAnimeCall = kitsuService.getTopRankedAnime("ratingRank", 20);
         topRankedAnimeCall.enqueue(new Callback<KitsuResponse<Anime>>() {
             @Override
             public void onResponse(Call<KitsuResponse<Anime>> call, Response<KitsuResponse<Anime>> response) {
@@ -167,7 +167,7 @@ public class AnimeFragment extends Fragment {
         });
     }
 private void loadTrendingAnime() {
-    Call<KitsuResponse<Anime>> trendingAnimeCall = kitsuService.getTrendingAnime(10);
+    Call<KitsuResponse<Anime>> trendingAnimeCall = kitsuService.getTrendingAnime(20);
     trendingAnimeCall.enqueue(new Callback<KitsuResponse<Anime>>() {
         @Override
         public void onResponse(Call<KitsuResponse<Anime>> call, Response<KitsuResponse<Anime>> response) {

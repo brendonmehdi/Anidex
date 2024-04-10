@@ -38,13 +38,11 @@ public class MainActivity extends AppCompatActivity {
         navView.setBackground(null);
 
 
-        //disable click of 3rd menu item (blank)
+        //Disable click of 3rd menu item (blank)
         Menu menu = navView.getMenu();
         MenuItem menuItem = menu.getItem(2);
         menuItem.setEnabled(false);
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_id, R.id.navigation_fav,R.id.nav_settings)
                 .build();

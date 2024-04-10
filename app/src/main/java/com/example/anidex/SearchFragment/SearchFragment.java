@@ -105,7 +105,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchAnime(String query) {
-        Call<KitsuResponse<Anime>> call = kitsuService.searchAnime(query, 5);
+        Call<KitsuResponse<Anime>> call = kitsuService.searchAnime(query, 10);
         call.enqueue(new Callback<KitsuResponse<Anime>>() {
             @Override
             public void onResponse(@NonNull Call<KitsuResponse<Anime>> call, @NonNull Response<KitsuResponse<Anime>> response) {
@@ -133,7 +133,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchManga(String query) {
-        Call<KitsuResponse<Manga>> call = kitsuService.searchManga(query, 5);
+        Call<KitsuResponse<Manga>> call = kitsuService.searchManga(query, 10);
         call.enqueue(new Callback<KitsuResponse<Manga>>() {
             @Override
             public void onResponse(@NonNull Call<KitsuResponse<Manga>> call, @NonNull Response<KitsuResponse<Manga>> response) {
