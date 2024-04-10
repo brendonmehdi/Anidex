@@ -13,13 +13,44 @@
             android:layout_height="400dp"
             android:scaleType="centerCrop"
             android:src="@drawable/noimage" />
-        <ImageButton
-            android:id="@+id/buttonOpenYouTube"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerCrop"
-            android:layout_gravity="left"
-            android:src="@drawable/youtube" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/buttonOpenYouTube"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="left"
+                android:background="@drawable/icon_background"
+                android:scaleType="centerCrop"
+                android:src="@drawable/youtube"
+                android:contentDescription="youtube icon"/>
+
+            <ImageButton
+                android:id="@+id/buttonOpenTwitter"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"
+                android:background="@drawable/icon_background"
+                android:scaleType="centerCrop"
+                android:src="@drawable/twitter2"
+                android:contentDescription="twitter icon"/>
+            <ImageButton
+                android:id="@+id/buttonCrunchyroll"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"
+                android:background="@drawable/icon_background"
+                android:scaleType="centerCrop"
+                android:src="@drawable/crunchyroll"
+                android:contentDescription="crunchyroll icon"/>
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/textViewTitle"

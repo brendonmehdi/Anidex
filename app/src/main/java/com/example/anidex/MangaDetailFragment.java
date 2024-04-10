@@ -1,9 +1,12 @@
 package com.example.anidex;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,6 +62,25 @@ public class MangaDetailFragment extends Fragment {
         TextView textViewEndDate = view.findViewById(R.id.textViewEndDate);
         TextView textViewChapterCount = view.findViewById(R.id.textViewChapterCount);
         TextView textViewVolumeCount = view.findViewById(R.id.textViewVolumeCount);
+        ImageButton twitterButton=view.findViewById(R.id.buttonOpenTwitter2);
+        ImageButton crunchyButton=view.findViewById(R.id.buttonCrunchyroll2);
+
+        crunchyButton.setOnClickListener(view1 -> {
+            String searchUrl = "https://www.crunchyroll.com/search?q=" + manga.getAttributes().getCanonicalTitle();
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchUrl));
+            startActivity(intent);
+        });
+
+        twitterButton.setOnClickListener(view1 -> {
+
+            String tweetText = "Hey everyone! "+manga.getAttributes().getCanonicalTitle()+" is an awesome manga, check it out and add it to your watchlist in the AniDex App!";
+
+            String tweetUrl = "https://twitter.com/intent/tweet?text=" + tweetText;
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweetUrl));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
 
         if (manga != null) {
             Picasso.get().load(manga.getAttributes().getPosterImage().getLarge()).into(imageViewManga);

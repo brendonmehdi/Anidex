@@ -64,12 +64,33 @@ public class AnimeDetailFragment extends Fragment {
         TextView textViewEpisodeCount = view.findViewById(R.id.textViewEpisodeCount);
         TextView textViewEpisodeLength = view.findViewById(R.id.textViewEpisodeLength);
         ImageButton imageButton=view.findViewById(R.id.buttonOpenYouTube);
+        ImageButton twitterButton=view.findViewById(R.id.buttonOpenTwitter);
+        ImageButton crunchyButton=view.findViewById(R.id.buttonCrunchyroll);
+
+        //intents for youtube and twitter
 
         imageButton.setOnClickListener(view1 -> {
             Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + anime.getAttributes().getYoutubeVideoId()));
             youtubeIntent.putExtra("force_fullscreen", false);
             startActivity(youtubeIntent);
 
+        });
+
+        twitterButton.setOnClickListener(view1 -> {
+
+            String tweetText = "Hey everyone! "+anime.getAttributes().getCanonicalTitle()+" is an awesome anime, check it out and add it to your watchlist in the AniDex App!";
+
+            String tweetUrl = "https://twitter.com/intent/tweet?text=" + tweetText;
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweetUrl));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
+
+        crunchyButton.setOnClickListener(view1 -> {
+            String searchUrl = "https://www.crunchyroll.com/search?q=" + anime.getAttributes().getCanonicalTitle();
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchUrl));
+            startActivity(intent);
         });
 
         Bundle arguments = getArguments();
