@@ -40,6 +40,7 @@ public class HomeFragment extends Fragment {
         viewPager.setAdapter(pagerAdapter);
 
         tabLayout = view.findViewById(R.id.tabLayout);
+        viewPager.setUserInputEnabled(false);
 
         // Connect TabLayout with ViewPager2
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {

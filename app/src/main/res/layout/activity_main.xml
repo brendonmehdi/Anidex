@@ -46,7 +46,8 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/fab_button"
         android:src="@drawable/baseline_saved_search_24"
-        app:layout_anchor="@id/bottomAppBar" />
+        app:layout_anchor="@id/bottomAppBar"
+        app:tooltipText="Tap to search or long press for music search"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

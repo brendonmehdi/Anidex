@@ -1,6 +1,9 @@
 package com.example.anidex.SearchFragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anidex.Favs.FavoritesManager;
@@ -68,7 +73,7 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
         return items.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
         ImageView imageAnime;
         TextView textName;
         TextView textType;
@@ -82,6 +87,8 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
             starIcon = itemView.findViewById(R.id.star_icon);
 
             starIcon.setOnClickListener(v -> toggleFavorite(getAdapterPosition()));
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         private void toggleFavorite(int position) {
@@ -104,7 +111,7 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
             textName.setText(anime.getAttributes().getCanonicalTitle());
             textType.setText(anime.getType());
             updateFavoriteIcon(anime.getId(), "anime");
-            loadImage(anime.getAttributes().getPosterImage().getMedium());
+            loadImage(anime.getAttributes().getPosterImage().getLarge());
 
         }
 
@@ -115,7 +122,7 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
 
             textType.setText(manga.getType());
             updateFavoriteIcon(manga.getId(), "manga");
-            loadImage(manga.getAttributes().getPosterImage().getMedium());
+            loadImage(manga.getAttributes().getPosterImage().getLarge());
         }
 
 
@@ -126,6 +133,52 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
 
         private void loadImage(String url) {
             Picasso.get().load(url).placeholder(R.drawable.noimage).into(imageAnime);
+        }
+
+        //Navigate to either AnimeDetail or MangaDetail based on what type of item was clicked in search
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Object clickedItem = items.get(position);
+
+                NavController navController = Navigation.findNavController(view);
+
+                if (clickedItem instanceof Anime) {
+                    Anime clickedAnime = (Anime) clickedItem;
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("anime", clickedAnime);
+                    navController.navigate(R.id.action_searchFragment_to_animeDetailFragment, bundle);
+                } else if (clickedItem instanceof Manga) {
+                    Manga clickedManga = (Manga) clickedItem;
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("manga", clickedManga);
+                    navController.navigate(R.id.action_searchFragment_to_mangaDetailFragment, bundle);
+                }
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Object clickedItem = items.get(position);
+
+                String searchQuery = "";
+                if (clickedItem instanceof Anime) {
+                    searchQuery = ((Anime) clickedItem).getAttributes().getCanonicalTitle();
+                } else if (clickedItem instanceof Manga) {
+                    searchQuery = ((Manga) clickedItem).getAttributes().getCanonicalTitle();
+                }
+
+                if (!searchQuery.isEmpty()) {
+                    String searchUrl = "https://www.crunchyroll.com/search?q=" + searchQuery;
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchUrl));
+                    context.startActivity(intent);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

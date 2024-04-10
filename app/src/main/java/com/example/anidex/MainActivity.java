@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
+import androidx.core.view.ViewCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -16,12 +18,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.anidex.databinding.ActivityMainBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
 
     private ActivityMainBinding binding;
+    public int fabCount=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +38,11 @@ public class MainActivity extends AppCompatActivity {
         navView.setBackground(null);
 
 
-        //disable click of 3rd menu item (blank)
+        //Disable click of 3rd menu item (blank)
         Menu menu = navView.getMenu();
         MenuItem menuItem = menu.getItem(2);
         menuItem.setEnabled(false);
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_id, R.id.navigation_fav,R.id.nav_settings)
                 .build();
@@ -48,9 +50,16 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
 
+
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(fabCount==0){
+                    Toast.makeText(MainActivity.this, "Tap to search or long press for music search", Toast.LENGTH_LONG).show();
+                    fabCount++;
+                }
+
+
                 navController.navigate(R.id.searchFragment);
             }
         });
@@ -63,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(NavController controller, NavDestination destination, Bundle arguments) {
