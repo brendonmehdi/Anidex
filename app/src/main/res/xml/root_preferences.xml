@@ -1,7 +1,10 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-
-
-
+    <ListPreference
+        app:key="search_limit"
+        app:title="Search Limit"
+        app:dialogTitle="Choose Search Limit"
+        app:entries="@array/search_limit_options_labels"
+        app:entryValues="@array/search_limit_options_values"
+        app:defaultValue="10"
+        app:summary="%s" />
 </PreferenceScreen>

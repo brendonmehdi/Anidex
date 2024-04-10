@@ -1,11 +1,14 @@
 package com.example.anidex.Music;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +43,14 @@ public class AnimeThemesAdapter extends RecyclerView.Adapter<AnimeThemesAdapter.
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_from_right);
         // Apply the animation to the holder's itemView
         holder.itemView.startAnimation(animation);
+
+
+        holder.musicImage.setOnClickListener(v -> {
+            //made it so it gets everything before the first "(" so that way we dont get anything we dont need like the episode numbers
+            String youtubeQuery = "http://www.youtube.com/results?search_query=" + theme.getTitle().substring(0, theme.getTitle().indexOf("(")).trim().replace(" ", "+");
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeQuery));
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -55,10 +66,13 @@ public class AnimeThemesAdapter extends RecyclerView.Adapter<AnimeThemesAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvSongTitle;
+        ImageView musicImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvSongTitle = itemView.findViewById(R.id.tvSongTitle);
+            musicImage = itemView.findViewById(R.id.musicImage);
+
         }
     }
 

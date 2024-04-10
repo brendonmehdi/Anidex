@@ -6,30 +6,49 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="#FFFFFF"
+    android:layout_marginBottom="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvSongTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Song Title"
+            android:textSize="18sp"
+            android:textColor="#000000"
+        android:gravity="center_vertical" />
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="#FFDD00"
-            app:cardCornerRadius="15dp">
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:cardBackgroundColor="@color/colorPrimaryVariant"
+            app:cardCornerRadius="100dp">
 
-            <TextView
-                android:id="@+id/tvSongTitle"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/musicImage"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:text="Song Title"
-                android:textSize="18sp" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:contentDescription="music icon"
+                android:gravity="center_vertical"
+                android:src="@drawable/music" />
         </androidx.cardview.widget.CardView>
 
-    </LinearLayout>
 
-</LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+    </LinearLayout>

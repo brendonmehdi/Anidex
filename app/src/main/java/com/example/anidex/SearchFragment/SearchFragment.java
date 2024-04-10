@@ -1,6 +1,7 @@
 package com.example.anidex.SearchFragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -105,7 +107,12 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchAnime(String query) {
-        Call<KitsuResponse<Anime>> call = kitsuService.searchAnime(query, 10);
+        //gets number from settings
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int searchLimit = Integer.parseInt(sharedPreferences.getString("search_limit", "10"));
+
+
+        Call<KitsuResponse<Anime>> call = kitsuService.searchAnime(query, searchLimit);
         call.enqueue(new Callback<KitsuResponse<Anime>>() {
             @Override
             public void onResponse(@NonNull Call<KitsuResponse<Anime>> call, @NonNull Response<KitsuResponse<Anime>> response) {
@@ -133,7 +140,12 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchManga(String query) {
-        Call<KitsuResponse<Manga>> call = kitsuService.searchManga(query, 10);
+        //gets number from settings
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        int searchLimit = Integer.parseInt(sharedPreferences.getString("search_limit", "10"));
+
+
+        Call<KitsuResponse<Manga>> call = kitsuService.searchManga(query, searchLimit);
         call.enqueue(new Callback<KitsuResponse<Manga>>() {
             @Override
             public void onResponse(@NonNull Call<KitsuResponse<Manga>> call, @NonNull Response<KitsuResponse<Manga>> response) {
