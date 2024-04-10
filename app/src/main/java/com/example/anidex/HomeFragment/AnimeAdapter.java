@@ -1,6 +1,8 @@
 package com.example.anidex.HomeFragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +56,7 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
         return animeList.size();
     }
 
-    public class AnimeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class AnimeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private ImageView imageView;
         private TextView titleTextView;
@@ -66,6 +68,7 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
             titleTextView = itemView.findViewById(R.id.homeName);
             subtypeTextView = itemView.findViewById(R.id.homeType);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         public void bind(Anime anime) {
@@ -89,7 +92,21 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
         }
 
 
+        @Override
+        public boolean onLongClick(View view) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Anime clickedAnime = animeList.get(position);
+                String searchQuery = clickedAnime.getAttributes().getCanonicalTitle();
 
-
+                if (!searchQuery.isEmpty()) {
+                    String searchUrl = "https://www.crunchyroll.com/search?q=" + searchQuery;
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchUrl));
+                    context.startActivity(intent);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

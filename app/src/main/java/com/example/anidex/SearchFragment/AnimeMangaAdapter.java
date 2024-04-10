@@ -1,6 +1,8 @@
 package com.example.anidex.SearchFragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +73,7 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
         return items.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
         ImageView imageAnime;
         TextView textName;
         TextView textType;
@@ -86,6 +88,7 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
 
             starIcon.setOnClickListener(v -> toggleFavorite(getAdapterPosition()));
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         private void toggleFavorite(int position) {
@@ -155,5 +158,27 @@ public class AnimeMangaAdapter extends RecyclerView.Adapter<AnimeMangaAdapter.Vi
             }
         }
 
+        @Override
+        public boolean onLongClick(View view) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Object clickedItem = items.get(position);
+
+                String searchQuery = "";
+                if (clickedItem instanceof Anime) {
+                    searchQuery = ((Anime) clickedItem).getAttributes().getCanonicalTitle();
+                } else if (clickedItem instanceof Manga) {
+                    searchQuery = ((Manga) clickedItem).getAttributes().getCanonicalTitle();
+                }
+
+                if (!searchQuery.isEmpty()) {
+                    String searchUrl = "https://www.crunchyroll.com/search?q=" + searchQuery;
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchUrl));
+                    context.startActivity(intent);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
