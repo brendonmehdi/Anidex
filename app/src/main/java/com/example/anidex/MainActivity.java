@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(fabCount==0){
-                    Snackbar.make(v, "Tap to search or long press for music search", Snackbar.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Tap to search or long press for music search", Toast.LENGTH_LONG).show();
                     fabCount++;
                 }
 
