@@ -1,9 +1,12 @@
 package com.example.anidex;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,6 +63,14 @@ public class AnimeDetailFragment extends Fragment {
         TextView textViewEndDate = view.findViewById(R.id.textViewEndDate);
         TextView textViewEpisodeCount = view.findViewById(R.id.textViewEpisodeCount);
         TextView textViewEpisodeLength = view.findViewById(R.id.textViewEpisodeLength);
+        ImageButton imageButton=view.findViewById(R.id.buttonOpenYouTube);
+
+        imageButton.setOnClickListener(view1 -> {
+            Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + anime.getAttributes().getYoutubeVideoId()));
+            youtubeIntent.putExtra("force_fullscreen", false);
+            startActivity(youtubeIntent);
+
+        });
 
         Bundle arguments = getArguments();
         if (arguments != null && arguments.containsKey("anime")) {
@@ -71,7 +82,7 @@ public class AnimeDetailFragment extends Fragment {
                 textViewSynopsis.setText(anime.getAttributes().getSynopsis());
                 textViewAverageRating.setText("Average Rating:"+anime.getAttributes().getAverageRating());
                 textViewStartDate.setText("Start Date:"+anime.getAttributes().getStartDate());
-                textViewEndDate.setText("Start Date:"+anime.getAttributes().getEndDate());
+                textViewEndDate.setText("End Date:"+anime.getAttributes().getEndDate());
                 textViewEpisodeCount.setText("Episode Count:"+String.valueOf(anime.getAttributes().getEpisodeCount()));
                 textViewEpisodeLength.setText("Episode Length:"+String.valueOf(anime.getAttributes().getEpisodeLength()));
             }

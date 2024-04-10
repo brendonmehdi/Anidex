@@ -13,6 +13,13 @@
             android:layout_height="400dp"
             android:scaleType="centerCrop"
             android:src="@drawable/noimage" />
+        <ImageButton
+            android:id="@+id/buttonOpenYouTube"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:layout_gravity="left"
+            android:src="@drawable/youtube" />
 
         <TextView
             android:id="@+id/textViewTitle"
@@ -23,6 +30,7 @@
             android:textColor="@android:color/black"
             android:layout_marginTop="16dp" />
 
+
         <TextView
             android:id="@+id/textViewSubtype"
             android:layout_width="match_parent"
@@ -31,6 +39,7 @@
             android:textSize="20sp"
             android:textColor="@color/white"
             android:layout_marginTop="8dp" />
+
 
         <TextView
             android:id="@+id/textViewSynopsis"

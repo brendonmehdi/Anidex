@@ -103,6 +103,18 @@ public class Anime implements Parcelable {
         @SerializedName("episodeLength")
         private int episodeLength;
 
+
+        @SerializedName("youtubeVideoId")
+        private String youtubeVideoId;
+
+        public String getYoutubeVideoId() {
+            return youtubeVideoId;
+        }
+
+        public void setYoutubeVideoId(String youtubeVideoId) {
+            this.youtubeVideoId = youtubeVideoId;
+        }
+
         public String getCanonicalTitle() {
             return canonicalTitle;
         }
@@ -151,7 +163,6 @@ public class Anime implements Parcelable {
             this.createdAt = createdAt;
         }
 
-        // Getters and setters for the new attributes
         public String getSynopsis() {
             return synopsis;
         }
@@ -200,7 +211,6 @@ public class Anime implements Parcelable {
             this.episodeLength = episodeLength;
         }
 
-        // No-argument constructor
         public Attributes() {
         }
 
@@ -217,6 +227,7 @@ public class Anime implements Parcelable {
             endDate = in.readString();
             episodeCount = in.readInt();
             episodeLength = in.readInt();
+            youtubeVideoId = in.readString();
         }
 
         public static final Creator<Attributes> CREATOR = new Creator<Attributes>() {
@@ -250,6 +261,7 @@ public class Anime implements Parcelable {
             dest.writeString(endDate);
             dest.writeInt(episodeCount);
             dest.writeInt(episodeLength);
+            dest.writeString(youtubeVideoId);
         }
     }
 
