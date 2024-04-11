@@ -14,7 +14,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "favoritesDb";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     private static final String TABLE_FAVORITES = "favorites";
     private static final String COLUMN_ID = "id";
@@ -29,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_END_DATE = "endDate";
     private static final String COLUMN_EPISODE_COUNT = "episodeCount";
     private static final String COLUMN_POSTER_IMAGE_URL = "posterImageUrl";
+    private static final String COLUMN_WATCH_STATUS = "watchStatus";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -47,7 +48,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_START_DATE + " TEXT,"
                 + COLUMN_END_DATE + " TEXT,"
                 + COLUMN_EPISODE_COUNT + " INTEGER,"
-                + COLUMN_POSTER_IMAGE_URL + " TEXT"
+                + COLUMN_POSTER_IMAGE_URL + " TEXT,"
+                + COLUMN_WATCH_STATUS + " TEXT" // Add this line
                 + ")";
         db.execSQL(CREATE_FAVORITES_TABLE);
     }
@@ -77,6 +79,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_EPISODE_COUNT, anime.getAttributes().getEpisodeCount());
         values.put(COLUMN_POSTER_IMAGE_URL, anime.getAttributes().getPosterImage().getLarge());
 
+        values.put(COLUMN_WATCH_STATUS, "toWatch");
+
         long result = db.insertWithOnConflict(TABLE_FAVORITES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         if (result == -1) Log.e("DatabaseHelper", "Failed to insert anime into favorites.");
         db.close();
@@ -96,6 +100,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_END_DATE, manga.getAttributes().getEndDate());
         values.put(COLUMN_EPISODE_COUNT, manga.getAttributes().getChapterCount()); // Use chapter count for manga
         values.put(COLUMN_POSTER_IMAGE_URL, manga.getAttributes().getPosterImage().getLarge());
+
+        values.put(COLUMN_WATCH_STATUS, "toWatch");
 
         long result = db.insertWithOnConflict(TABLE_FAVORITES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         if (result == -1) Log.e("DatabaseHelper", "Failed to insert manga into favorites.");
@@ -118,6 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String endDate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_END_DATE));
             int episodeCount = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_EPISODE_COUNT));
             String posterImageUrl = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_POSTER_IMAGE_URL));
+            String watchStatus = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_WATCH_STATUS));
 
             if ("anime".equals(type)) {
                 Anime anime = new Anime();
@@ -135,6 +142,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 anime.setId(externalId);
                 anime.setAttributes(attributes);
                 anime.setUserComment(comment);
+                anime.setWatchStatus(watchStatus);
                 favoritesList.add(anime);
             } else if ("manga".equals(type)) {
                 Manga manga = new Manga();
@@ -152,6 +160,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 manga.setId(externalId);
                 manga.setAttributes(attributes);
                 manga.setUserComment(comment);
+                manga.setWatchStatus(watchStatus);
                 favoritesList.add(manga);
             }
         }
@@ -188,6 +197,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         db.close();
     }
+
+    public void updateAnimeStatus(String id, String status) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_WATCH_STATUS, status); // COLUMN_WATCH_STATUS is the name of the column storing the watch status
+
+        db.update(TABLE_FAVORITES, values, COLUMN_EXTERNAL_ID + "=? AND " + COLUMN_TYPE + "=?", new String[]{id, "anime"});
+        db.close();
+    }
+
+    public void updateMangaStatus(String id, String status) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_WATCH_STATUS, status);
+
+        db.update(TABLE_FAVORITES, values, COLUMN_EXTERNAL_ID + "=? AND " + COLUMN_TYPE + "=?", new String[]{id, "manga"});
+        db.close();
+    }
+
 
 
 }

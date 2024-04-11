@@ -18,6 +18,16 @@ public class Anime implements Parcelable {
     private String userReview;
     private String userComment;
 
+    private String watchStatus;
+
+    public String getWatchStatus() {
+        return watchStatus;
+    }
+
+    public void setWatchStatus(String watchStatus) {
+        this.watchStatus = watchStatus;
+    }
+
     // Getters and setters for the new fields
     public String getUserReview() {
         return userReview;

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,18 +49,62 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
         Object item = animeList.get(position);
 
+
+//
+//        String status = item instanceof Anime ? ((Anime)item).getStatus() : ((Manga)item).getStatus();
+//
+//        if ("watched".equals(status)) {
+//            holder.toWatchButton.setBackgroundColor(Color.rgb(255,184,107));
+//            holder.watchedButton.setBackgroundColor(Color.rgb(255,153,0));
+//            holder.closedEye.setVisibility(View.INVISIBLE);
+//            holder.openEye.setVisibility(View.VISIBLE);
+//        } else if ("toWatch".equals(status)) {
+//            holder.watchedButton.setBackgroundColor(Color.rgb(255,184,107));
+//            holder.toWatchButton.setBackgroundColor(Color.rgb(255,153,0));
+//            holder.closedEye.setVisibility(View.VISIBLE);
+//            holder.openEye.setVisibility(View.INVISIBLE);
+//        }
+
+        holder.watchedButton.setOnClickListener(v -> {
+            if (item instanceof Anime) {
+                Anime anime = (Anime) item;
+                anime.setWatchStatus("watched");
+                favoritesManager.updateWatchStatus(anime.getId(), "anime", "watched");
+            } else if (item instanceof Manga) {
+                Manga manga = (Manga) item;
+                manga.setWatchStatus("watched");
+                favoritesManager.updateWatchStatus(manga.getId(), "manga", "watched");
+            }
+            updateUIBasedOnStatus(holder, "watched");
+        });
+
+        holder.toWatchButton.setOnClickListener(v -> {
+            if (item instanceof Anime) {
+                Anime anime = (Anime) item;
+                anime.setWatchStatus("toWatch");
+                favoritesManager.updateWatchStatus(anime.getId(), "anime", "toWatch");
+            } else if (item instanceof Manga) {
+                Manga manga = (Manga) item;
+                manga.setWatchStatus("toWatch");
+                favoritesManager.updateWatchStatus(manga.getId(), "manga", "toWatch");
+            }
+            updateUIBasedOnStatus(holder, "toWatch");
+        });
+
+
+        String status = "";
         if (item instanceof Anime) {
             Anime anime = (Anime) item;
+            status = anime.getWatchStatus(); // Assuming getWatchStatus() method exists in your Anime class
             holder.bind(anime.getAttributes().getCanonicalTitle(), anime.getUserComment());
-
-//            Log.d("AnimeBind", "Binding anime: " + anime.getUserComment());
-        }
-        if (item instanceof Manga) {
+        } else if (item instanceof Manga) {
             Manga manga = (Manga) item;
+            status = manga.getWatchStatus(); // Assuming getWatchStatus() method exists in your Manga class
             holder.bind(manga.getAttributes().getCanonicalTitle(), manga.getUserComment());
-
-//            Log.d("MangaBind", "Binding manga: " + manga.getUserComment());
         }
+
+        // Apply watch status to the UI elements
+        updateUIBasedOnStatus(holder, status);
 
         holder.removeButton.setOnClickListener(v -> {
             if (item instanceof Anime) {
@@ -75,22 +120,41 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         holder.editCommentButton.setOnClickListener(v -> showEditCommentDialog(item, position, holder.commentTextView));
         holder.commentButton.setOnClickListener(v -> showCommentDialog(item, position, holder.commentTextView));
 
-        holder.watchedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                holder.toWatchButton.setBackgroundColor(Color.rgb(255,184,107));
-                holder.watchedButton.setBackgroundColor(Color.rgb(255,153,0));
-            }
-        });
-
-        holder.toWatchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                holder.watchedButton.setBackgroundColor(Color.rgb(255,184,107));
-                holder.toWatchButton.setBackgroundColor(Color.rgb(255,153,0));
-            }
-        });
+//        holder.watchedButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                holder.toWatchButton.setBackgroundColor(Color.rgb(255,184,107));
+//                holder.watchedButton.setBackgroundColor(Color.rgb(255,153,0));
+//                holder.closedEye.setVisibility(view.INVISIBLE);
+//                holder.openEye.setVisibility(view.VISIBLE);
+//            }
+//        });
+//
+//        holder.toWatchButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                holder.watchedButton.setBackgroundColor(Color.rgb(255,184,107));
+//                holder.toWatchButton.setBackgroundColor(Color.rgb(255,153,0));
+//                holder.closedEye.setVisibility(view.VISIBLE);
+//                holder.openEye.setVisibility(view.INVISIBLE);
+//            }
+//        });
     }
+
+    private void updateUIBasedOnStatus(ViewHolder holder, String status) {
+        if ("watched".equals(status)) {
+            holder.toWatchButton.setBackgroundColor(Color.rgb(255,184,107));
+            holder.watchedButton.setBackgroundColor(Color.rgb(255,153,0));
+            holder.closedEye.setVisibility(View.INVISIBLE);
+            holder.openEye.setVisibility(View.VISIBLE);
+        } else if ("toWatch".equals(status)) {
+            holder.watchedButton.setBackgroundColor(Color.rgb(255,184,107));
+            holder.toWatchButton.setBackgroundColor(Color.rgb(255,153,0));
+            holder.closedEye.setVisibility(View.VISIBLE);
+            holder.openEye.setVisibility(View.INVISIBLE);
+        }
+    }
+
 
     @Override
     public int getItemCount() {
@@ -162,6 +226,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView titleTextView, commentTextView;
         Button removeButton, editCommentButton, commentButton, watchedButton, toWatchButton;
+        ImageView closedEye, openEye;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -172,6 +237,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
             commentButton = itemView.findViewById(R.id.commentButton);
             watchedButton = itemView.findViewById(R.id.watched);
             toWatchButton = itemView.findViewById(R.id.toWatch);
+            closedEye = itemView.findViewById(R.id.closedEye);
+            openEye = itemView.findViewById(R.id.openEye);
             itemView.setOnClickListener(this); // Set the click listener for the entire view
         }
 

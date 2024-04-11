@@ -13,6 +13,15 @@ public class Manga implements Parcelable {
     private Attributes attributes;
     private String userReview; // New field for user review
     private String userComment; // New field for user comment
+    private String watchStatus;
+
+    public String getWatchStatus() {
+        return watchStatus;
+    }
+
+    public void setWatchStatus(String watchStatus) {
+        this.watchStatus = watchStatus;
+    }
 
     // Standard getters and setters for the new fields
     public String getUserReview() {

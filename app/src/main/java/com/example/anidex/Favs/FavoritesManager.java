@@ -64,6 +64,8 @@ public class FavoritesManager {
         dbHelper.updateFavorite(anime.getId(), "anime", anime.getUserComment());
     }
 
+
+
     // Method to update a favorite manga, including its comment
     public void updateFavoriteManga(Manga manga) {
         if (manga == null) {
@@ -73,6 +75,25 @@ public class FavoritesManager {
 
         dbHelper.updateFavorite(manga.getId(), "manga", manga.getUserComment());
     }
+
+    // New method to update the watch status of an Anime or Manga
+    public void updateWatchStatus(String id, String type, String status) {
+        if (id == null || type == null || status == null) {
+            Log.e("FavoritesManager", "One of the parameters is null in updateWatchStatus method.");
+            return;
+        }
+
+        if ("anime".equals(type)) {
+            dbHelper.updateAnimeStatus(id, status);
+        } else if ("manga".equals(type)) {
+            dbHelper.updateMangaStatus(id, status);
+        } else {
+            Log.e("FavoritesManager", "Unsupported type in updateWatchStatus method.");
+        }
+    }
+
+
+
 
 
     public List<Object> getAllFavorites(String type) {
