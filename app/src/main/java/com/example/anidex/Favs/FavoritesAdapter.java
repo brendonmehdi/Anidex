@@ -1,6 +1,7 @@
 package com.example.anidex.Favs;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -73,6 +74,22 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
         holder.editCommentButton.setOnClickListener(v -> showEditCommentDialog(item, position, holder.commentTextView));
         holder.commentButton.setOnClickListener(v -> showCommentDialog(item, position, holder.commentTextView));
+
+        holder.watchedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.toWatchButton.setBackgroundColor(Color.rgb(255,184,107));
+                holder.watchedButton.setBackgroundColor(Color.rgb(255,153,0));
+            }
+        });
+
+        holder.toWatchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.watchedButton.setBackgroundColor(Color.rgb(255,184,107));
+                holder.toWatchButton.setBackgroundColor(Color.rgb(255,153,0));
+            }
+        });
     }
 
     @Override
@@ -144,7 +161,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView titleTextView, commentTextView;
-        Button removeButton, editCommentButton, commentButton;
+        Button removeButton, editCommentButton, commentButton, watchedButton, toWatchButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -153,6 +170,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
             removeButton = itemView.findViewById(R.id.remove_button);
             editCommentButton = itemView.findViewById(R.id.edit_button);
             commentButton = itemView.findViewById(R.id.commentButton);
+            watchedButton = itemView.findViewById(R.id.watched);
+            toWatchButton = itemView.findViewById(R.id.toWatch);
             itemView.setOnClickListener(this); // Set the click listener for the entire view
         }
 

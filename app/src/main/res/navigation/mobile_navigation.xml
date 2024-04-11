@@ -30,8 +30,8 @@
     <fragment
         android:id="@+id/navigation_fav"
         android:name="com.example.anidex.Favs.FavFragment"
-        android:label="Favourites"
-        tools:layout="@layout/fragment_fav" >
+        android:label="Watchlist"
+        tools:layout="@layout/fragment_fav">
         <action
             android:id="@+id/action_navigation_fav_to_animeDetailFragment"
             app:destination="@id/animeDetailFragment" />
