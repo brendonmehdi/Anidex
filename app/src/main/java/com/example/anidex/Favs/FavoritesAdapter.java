@@ -30,6 +30,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     private Context context;
     private FavoritesManager favoritesManager;
 
+
     public FavoritesAdapter(List<Object> animeList, Context context) {
         this.animeList = animeList;
         this.context = context;
@@ -48,9 +49,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
 
         Object item = animeList.get(position);
-        
+
 
         holder.watchedButton.setOnClickListener(v -> {
+
             if (item instanceof Anime) {
                 Anime anime = (Anime) item;
                 anime.setWatchStatus("watched");

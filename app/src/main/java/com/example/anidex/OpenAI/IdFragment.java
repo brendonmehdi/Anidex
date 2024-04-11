@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class IdFragment extends Fragment {
     private TextView imgText; // Displays analysis result.
     private ActivityResultLauncher<String> getContent; // Handles result of image selection.
     private OpenAIApiService apiService; // API service for uploading images.
+    private ProgressBar bar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,6 +130,7 @@ public class IdFragment extends Fragment {
         // Initializes UI components.
         imageView = view.findViewById(R.id.imageView);
         imgText = view.findViewById(R.id.imageText);
+        bar = view.findViewById(R.id.idBar);
 //        Button buttonUpload = view.findViewById(R.id.buttonUpload);
 
         // Sets a click listener on the upload button to launch the image picker.
@@ -181,6 +184,7 @@ public class IdFragment extends Fragment {
      * @param base64Image The Base64-encoded image string.
      */
     private void uploadImage(String base64Image) {
+        bar.setVisibility(View.VISIBLE);
         // constructs the JSON payload for the API request
         JSONObject payload = new JSONObject();
         try {
@@ -244,6 +248,7 @@ public class IdFragment extends Fragment {
                         String responseText = apiResponse.getChoices().get(0).getMessage().getContent();
                         getActivity().runOnUiThread(() -> {
                             Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
+                            bar.setVisibility(View.INVISIBLE);
                             imgText.setText(responseText); // Updates the TextView with analysis result.
                         });
                     } else {
