@@ -36,7 +36,15 @@ public class FavoritesManager {
             Log.e("FavoritesManager", "Item or type is null in addFavorite method.");
             return;
         }
-        dbHelper.addFavorite(item, type);
+
+        // Checks type and calls method
+        if (item instanceof Anime && "anime".equals(type)) {
+            dbHelper.addFavoriteAnime((Anime) item);
+        } else if (item instanceof Manga && "manga".equals(type)) {
+            dbHelper.addFavoriteManga((Manga) item);
+        } else {
+            Log.e("FavoritesManager", "Unsupported type or mismatch between type and instance.");
+        }
     }
 
     public void removeFavorite(String id, String type) {

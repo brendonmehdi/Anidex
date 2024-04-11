@@ -26,11 +26,20 @@
         android:name="com.example.anidex.OpenAI.IdFragment"
         android:label="ID"
         tools:layout="@layout/fragment_id" />
+
     <fragment
         android:id="@+id/navigation_fav"
         android:name="com.example.anidex.Favs.FavFragment"
         android:label="Favourites"
-        tools:layout="@layout/fragment_fav" />
+        tools:layout="@layout/fragment_fav" >
+        <action
+            android:id="@+id/action_navigation_fav_to_animeDetailFragment"
+            app:destination="@id/animeDetailFragment" />
+        <action
+            android:id="@+id/action_navigation_fav_to_mangaDetailFragment"
+            app:destination="@id/mangaDetailFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.anidex.SearchFragment.SearchFragment"

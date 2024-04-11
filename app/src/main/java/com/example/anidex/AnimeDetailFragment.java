@@ -96,16 +96,17 @@ public class AnimeDetailFragment extends Fragment {
         Bundle arguments = getArguments();
         if (arguments != null && arguments.containsKey("anime")) {
             Anime anime = arguments.getParcelable("anime");
-            if (anime != null) {
+            if (anime != null && anime.getAttributes() != null && anime.getAttributes().getPosterImage() != null && anime.getAttributes().getPosterImage().getLarge() != null) {
                 Picasso.get().load(anime.getAttributes().getPosterImage().getLarge()).into(imageViewAnime);
                 textViewTitle.setText(anime.getAttributes().getCanonicalTitle());
                 textViewSubtype.setText(anime.getAttributes().getSubType());
                 textViewSynopsis.setText(anime.getAttributes().getSynopsis());
-                textViewAverageRating.setText("Average Rating:"+anime.getAttributes().getAverageRating());
-                textViewStartDate.setText("Start Date:"+anime.getAttributes().getStartDate());
-                textViewEndDate.setText("End Date:"+anime.getAttributes().getEndDate());
-                textViewEpisodeCount.setText("Episode Count:"+String.valueOf(anime.getAttributes().getEpisodeCount()));
-                textViewEpisodeLength.setText("Episode Length:"+String.valueOf(anime.getAttributes().getEpisodeLength()));
+                textViewAverageRating.setText("Average Rating:" + anime.getAttributes().getAverageRating());
+                textViewStartDate.setText("Start Date:" + anime.getAttributes().getStartDate());
+                textViewEndDate.setText("End Date:" + anime.getAttributes().getEndDate());
+                textViewEpisodeCount.setText("Episode Count:" + String.valueOf(anime.getAttributes().getEpisodeCount()));
+                textViewEpisodeLength.setText("Episode Length:" + String.valueOf(anime.getAttributes().getEpisodeLength()));
+
             }
         }
     }

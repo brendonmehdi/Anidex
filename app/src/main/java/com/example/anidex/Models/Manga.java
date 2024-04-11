@@ -315,7 +315,10 @@ public class Manga implements Parcelable {
             this.original = original;
         }
 
-        protected PosterImage(Parcel in) {
+        public PosterImage() {
+        }
+
+        public PosterImage(Parcel in) {
             tiny = in.readString();
             small = in.readString();
             medium = in.readString();

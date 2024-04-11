@@ -1,6 +1,7 @@
 package com.example.anidex.Favs;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anidex.Models.Anime;
@@ -109,8 +111,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     }
 
 
-
-
     private void showCommentDialog(Object item, int position, TextView commentTextView) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Leave a Comment");
@@ -142,7 +142,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView titleTextView, commentTextView;
         Button removeButton, editCommentButton, commentButton;
 
@@ -153,11 +153,35 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
             removeButton = itemView.findViewById(R.id.remove_button);
             editCommentButton = itemView.findViewById(R.id.edit_button);
             commentButton = itemView.findViewById(R.id.commentButton);
+            itemView.setOnClickListener(this); // Set the click listener for the entire view
         }
 
         public void bind(String title, String comment) {
             titleTextView.setText(title);
             commentTextView.setText(comment);
         }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Object item = animeList.get(position);
+                Bundle bundle = new Bundle();
+
+                if (item instanceof Anime) {
+                    Anime anime = (Anime) item;
+                    bundle.putParcelable("anime", anime);
+                    // Ensure this ID matches the one in your navigation graph
+                    Navigation.findNavController(view).navigate(R.id.action_navigation_fav_to_animeDetailFragment, bundle);
+
+                } else if (item instanceof Manga) {
+                    Manga manga = (Manga) item;
+                    bundle.putParcelable("manga", manga);
+                    // Ensure this ID matches the one in your navigation graph
+                    Navigation.findNavController(view).navigate(R.id.action_navigation_fav_to_mangaDetailFragment, bundle);
+                }
+            }
+        }
+
     }
 }

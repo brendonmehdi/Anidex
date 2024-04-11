@@ -48,11 +48,6 @@ public class FavFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    private void refreshFavorites() {
-        favoriteAnimes = db.getAllFavorites("anime");
-        adapter = new FavoritesAdapter(favoriteAnimes, getContext());
-        recyclerView.setAdapter(adapter);
-    }
 
 
 }

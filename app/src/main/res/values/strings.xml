@@ -31,10 +31,10 @@
 <!--    string array for the search settings-->
 
     <string-array name="search_limit_options_labels">
-        <item>5 results</item>
         <item>10 results</item>
-        <item>15 results</item>
         <item>20 results</item>
+        <item>30 results</item>
+        <item>50 results</item>
     </string-array>
     <string-array name="search_limit_options_values">
         <item>5</item>

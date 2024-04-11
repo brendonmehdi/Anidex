@@ -214,6 +214,7 @@ public class Anime implements Parcelable {
         public Attributes() {
         }
 
+
         protected Attributes(Parcel in) {
             canonicalTitle = in.readString();
             posterImage = in.readParcelable(PosterImage.class.getClassLoader());
@@ -313,7 +314,10 @@ public class Anime implements Parcelable {
             this.original = original;
         }
 
-        protected PosterImage(Parcel in) {
+        public PosterImage() {
+        }
+
+        public PosterImage(Parcel in) {
             tiny = in.readString();
             small = in.readString();
             medium = in.readString();

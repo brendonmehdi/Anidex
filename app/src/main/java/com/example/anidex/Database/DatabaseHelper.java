@@ -14,14 +14,21 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "favoritesDb";
-    private static final int DATABASE_VERSION = 3; // Incremented to 3 for the new schema
+    private static final int DATABASE_VERSION = 4;
 
     private static final String TABLE_FAVORITES = "favorites";
     private static final String COLUMN_ID = "id";
-    private static final String COLUMN_EXTERNAL_ID = "external_id"; // External ID from API
+    private static final String COLUMN_EXTERNAL_ID = "external_id";
     private static final String COLUMN_TITLE = "title";
     private static final String COLUMN_TYPE = "type";
     private static final String COLUMN_COMMENT = "comment"; // Added this line for the comment column
+
+    private static final String COLUMN_SYNOPSIS = "synopsis";
+    private static final String COLUMN_AVERAGE_RATING = "averageRating";
+    private static final String COLUMN_START_DATE = "startDate";
+    private static final String COLUMN_END_DATE = "endDate";
+    private static final String COLUMN_EPISODE_COUNT = "episodeCount";
+    private static final String COLUMN_POSTER_IMAGE_URL = "posterImageUrl";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -31,43 +38,70 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_FAVORITES_TABLE = "CREATE TABLE " + TABLE_FAVORITES + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_EXTERNAL_ID + " TEXT UNIQUE," // Ensure uniqueness for external ID
+                + COLUMN_EXTERNAL_ID + " TEXT UNIQUE,"
                 + COLUMN_TITLE + " TEXT,"
                 + COLUMN_TYPE + " TEXT,"
-                + COLUMN_COMMENT + " TEXT" // Added this line to create the comment column
+                + COLUMN_COMMENT + " TEXT,"
+                + COLUMN_SYNOPSIS + " TEXT,"
+                + COLUMN_AVERAGE_RATING + " TEXT,"
+                + COLUMN_START_DATE + " TEXT,"
+                + COLUMN_END_DATE + " TEXT,"
+                + COLUMN_EPISODE_COUNT + " INTEGER,"
+                + COLUMN_POSTER_IMAGE_URL + " TEXT"
                 + ")";
         db.execSQL(CREATE_FAVORITES_TABLE);
     }
 
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // This will simply drop the table and recreate it.
-        // Consider a migration strategy to preserve existing data if necessary.
+//to update db
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
         onCreate(db);
     }
 
-    public void addFavorite(Object favorite, String type) {
+
+
+    public void addFavoriteAnime(Anime anime) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        String externalId = favorite instanceof Anime ? ((Anime) favorite).getId() : ((Manga) favorite).getId();
-        String title = favorite instanceof Anime ? ((Anime) favorite).getAttributes().getCanonicalTitle() : ((Manga) favorite).getAttributes().getCanonicalTitle();
-        String comment = favorite instanceof Anime ? ((Anime) favorite).getUserComment() : ((Manga) favorite).getUserComment();
+        values.put(COLUMN_EXTERNAL_ID, anime.getId());
+        values.put(COLUMN_TITLE, anime.getAttributes().getCanonicalTitle());
+        values.put(COLUMN_TYPE, "anime");
+        values.put(COLUMN_COMMENT, anime.getUserComment());
+        // Add the new fields
+        values.put(COLUMN_SYNOPSIS, anime.getAttributes().getSynopsis());
+        values.put(COLUMN_AVERAGE_RATING, anime.getAttributes().getAverageRating());
+        values.put(COLUMN_START_DATE, anime.getAttributes().getStartDate());
+        values.put(COLUMN_END_DATE, anime.getAttributes().getEndDate());
+        values.put(COLUMN_EPISODE_COUNT, anime.getAttributes().getEpisodeCount());
+        values.put(COLUMN_POSTER_IMAGE_URL, anime.getAttributes().getPosterImage().getLarge());
 
-        values.put(COLUMN_EXTERNAL_ID, externalId);
-        values.put(COLUMN_TITLE, title);
-        values.put(COLUMN_TYPE, type);
-        values.put(COLUMN_COMMENT, comment);
-
-        // insert with conflict resolution to avoid duplicate entries
         long result = db.insertWithOnConflict(TABLE_FAVORITES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-        if (result == -1) {
-            Log.e("DatabaseHelper", "Failed to insert manga into favorites.");
-        } else {
-            Log.d("DatabaseHelper", "Manga inserted into favorites successfully.");
-        }
+        if (result == -1) Log.e("DatabaseHelper", "Failed to insert anime into favorites.");
         db.close();
     }
+
+    public void addFavoriteManga(Manga manga) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_EXTERNAL_ID, manga.getId());
+        values.put(COLUMN_TITLE, manga.getAttributes().getCanonicalTitle());
+        values.put(COLUMN_TYPE, "manga");
+        values.put(COLUMN_COMMENT, manga.getUserComment());
+        // Assume Manga has similar fields; adjust as necessary
+        values.put(COLUMN_SYNOPSIS, manga.getAttributes().getSynopsis());
+        values.put(COLUMN_AVERAGE_RATING, manga.getAttributes().getAverageRating());
+        values.put(COLUMN_START_DATE, manga.getAttributes().getStartDate());
+        values.put(COLUMN_END_DATE, manga.getAttributes().getEndDate());
+        values.put(COLUMN_EPISODE_COUNT, manga.getAttributes().getChapterCount()); // Use chapter count for manga
+        values.put(COLUMN_POSTER_IMAGE_URL, manga.getAttributes().getPosterImage().getLarge());
+
+        long result = db.insertWithOnConflict(TABLE_FAVORITES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        if (result == -1) Log.e("DatabaseHelper", "Failed to insert manga into favorites.");
+        db.close();
+    }
+
 
     public List<Object> getAllFavorites(String type) {
         List<Object> favoritesList = new ArrayList<>();
@@ -77,23 +111,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             String externalId = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EXTERNAL_ID));
             String title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE));
-            String comment = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COMMENT)); // Ensure we are fetching the comment
+            String comment = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COMMENT));
+            String synopsis = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SYNOPSIS));
+            String averageRating = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AVERAGE_RATING));
+            String startDate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_START_DATE));
+            String endDate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_END_DATE));
+            int episodeCount = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_EPISODE_COUNT));
+            String posterImageUrl = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_POSTER_IMAGE_URL));
 
             if ("anime".equals(type)) {
                 Anime anime = new Anime();
-                anime.setId(externalId);
                 Anime.Attributes attributes = new Anime.Attributes();
                 attributes.setCanonicalTitle(title);
+                attributes.setSynopsis(synopsis);
+                attributes.setAverageRating(averageRating);
+                attributes.setStartDate(startDate);
+                attributes.setEndDate(endDate);
+                attributes.setEpisodeCount(episodeCount);
+                Anime.PosterImage posterImage = new Anime.PosterImage();
+                posterImage.setLarge(posterImageUrl);
+                attributes.setPosterImage(posterImage);
+
+                anime.setId(externalId);
                 anime.setAttributes(attributes);
-                anime.setUserComment(comment); // Set the comment here
+                anime.setUserComment(comment);
                 favoritesList.add(anime);
             } else if ("manga".equals(type)) {
                 Manga manga = new Manga();
-                manga.setId(externalId);
                 Manga.Attributes attributes = new Manga.Attributes();
                 attributes.setCanonicalTitle(title);
+                attributes.setSynopsis(synopsis);
+                attributes.setAverageRating(averageRating);
+                attributes.setStartDate(startDate);
+                attributes.setEndDate(endDate);
+                attributes.setChapterCount(episodeCount); // Assuming episodeCount is used for chapter count in manga
+                Manga.PosterImage posterImage = new Manga.PosterImage();
+                posterImage.setLarge(posterImageUrl);
+                attributes.setPosterImage(posterImage);
+
+                manga.setId(externalId);
                 manga.setAttributes(attributes);
-                manga.setUserComment(comment); // Set the comment here
+                manga.setUserComment(comment);
                 favoritesList.add(manga);
             }
         }
@@ -101,6 +159,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return favoritesList;
     }
+
 
 
 
