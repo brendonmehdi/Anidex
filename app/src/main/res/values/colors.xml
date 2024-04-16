@@ -7,4 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <color name="colorPrimary">#FF9900</color>
+    <color name="colorPrimaryVariant">#FFB86B</color>
+    <color name="colorOnPrimary">@android:color/white</color>
+    <color name="colorSecondary">#FF9900</color>
+    <color name="colorSecondaryVariant">#FFED43</color>
+    <color name="colorOnSecondary">@android:color/black</color>
+    <color name="editTextColor">#808080</color>
+
 </resources>
