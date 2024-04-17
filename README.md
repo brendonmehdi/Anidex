@@ -15,7 +15,9 @@ AniDex is not just another Android application; it's a vibrant hub for anime and
 
 ## Screenshots
 
-TODO: Add screenshots here.
+![Screenshot_1712156815](https://github.com/brendonmehdi/Anidex/assets/146120852/5a9fef46-6d3d-446c-810e-bcc659533327)
+![Screenshot_1712154126](https://github.com/brendonmehdi/Anidex/assets/146120852/40b63493-8e26-4d59-8d30-9cb47d85373b)
+![Screenshot_1712154056](https://github.com/brendonmehdi/Anidex/assets/146120852/d4438369-c826-43b9-ad2e-e016a1ac1baf)
 
 ## Getting Started
 
